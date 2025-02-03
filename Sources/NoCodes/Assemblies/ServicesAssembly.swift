@@ -9,9 +9,7 @@
 import Foundation
 
 fileprivate enum StringConstants: String {
-  //  http://epic-qonstructor.dash-app.stage.qmoons.me/no-codes?project=mLite
   case baseURL = "https://api.qonversion.io/"
-//  case baseURL = "http://main.api-gateway.stage.qmoons.me/"
   
   case api = ""
 }

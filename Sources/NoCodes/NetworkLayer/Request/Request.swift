@@ -34,7 +34,7 @@ enum Request : Hashable {
     func hash(into hasher: inout Hasher) {
         switch self {
         case let .getScreen(id, endpoint, type):
-            hasher.combine("geScreen")
+            hasher.combine("getScreen")
             hasher.combine(id)
             hasher.combine(endpoint)
             hasher.combine(type)
