@@ -7,7 +7,7 @@ Qonversion - In-app subscription monetization: implement subscriptions and grow 
 * In-app subscription management SDK
 * API and webhooks to make your subscription data available where you need it
 * Seamless Stripe integration to enable cross-platform access management
-* Subscribers CRM with user-level transactions
+* Subscribers CR  M with user-level transactions
 * Instant access to real-time subscription analytics
 * Built-in A/B experiments for subscription business model
 
