@@ -81,7 +81,6 @@ final class MiscAssembly {
   }
   
   func headersBuilder() -> HeadersBuilderInterface {
-    print("l")
     let deviceInfoCollector = servicesAssembly.deviceInfoCollector()
     let headersBuilder = HeadersBuilder(apiKey: apiKey, sdkVersion: SDKLevelConstants.version.rawValue, deviceInfoCollector: deviceInfoCollector)
     
