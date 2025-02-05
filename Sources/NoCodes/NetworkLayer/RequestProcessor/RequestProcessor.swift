@@ -48,10 +48,7 @@ class RequestProcessor: RequestProcessorInterface {
       let (data, urlResponse) = try await networkProvider.send(request: urlRequest)
       error = errorHandler.extractError(from: urlResponse, body: data)
       responseBody = data
-//      id dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-      let f = try JSONSerialization.jsonObject(with: data, options: [])
       responseCode = (urlResponse as? HTTPURLResponse)?.statusCode ?? 0
-//      print(f)
     } catch {
       throw QonversionError(type: .invalidResponse, error: error)
     }

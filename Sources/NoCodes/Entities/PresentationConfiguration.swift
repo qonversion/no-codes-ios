@@ -20,7 +20,12 @@ extension NoCodes {
     let animated: Bool
     let presentationStyle: NoCodes.PresentationStyle
     
-    static func defaultConfiguration() -> PresentationConfiguration {
+    public init(animated: Bool, presentationStyle: NoCodes.PresentationStyle) {
+      self.animated = animated
+      self.presentationStyle = presentationStyle
+    }
+    
+    public static func defaultConfiguration() -> PresentationConfiguration {
       return PresentationConfiguration(animated: true, presentationStyle: .fullScreen)
     }
   }

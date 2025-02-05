@@ -9,11 +9,7 @@
 import Foundation
 
 fileprivate enum StringConstants: String {
-  //  http://epic-qonstructor.dash-app.stage.qmoons.me/no-codes?project=mLite
   case baseURL = "https://api.qonversion.io/"
-//  case baseURL = "http://main.api-gateway.stage.qmoons.me/"
-  
-  case api = ""
 }
 
 final class ServicesAssembly {
@@ -36,10 +32,9 @@ final class ServicesAssembly {
     let decoder: ResponseDecoderInterface = miscAssembly.responseDecoder()
     let rateLimiter: RateLimiterInterface = miscAssembly.rateLimiter()
     
-#warning("Update retriable requests list")
     let retriableRequestsList: [Request] = []
     
-    let processor = RequestProcessor(baseURL: StringConstants.baseURL.rawValue + StringConstants.api.rawValue, networkProvider: networkProvider, headersBuilder: headersBuilder, errorHandler: errorHandler, decoder: decoder, retriableRequestsList: retriableRequestsList, rateLimiter: rateLimiter)
+    let processor = RequestProcessor(baseURL: StringConstants.baseURL.rawValue, networkProvider: networkProvider, headersBuilder: headersBuilder, errorHandler: errorHandler, decoder: decoder, retriableRequestsList: retriableRequestsList, rateLimiter: rateLimiter)
     
     return processor
   }

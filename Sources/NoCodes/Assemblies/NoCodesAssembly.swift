@@ -28,14 +28,14 @@ final class NoCodesAssembly {
     }
     
     let noCodesService: NoCodesServiceInterface = servicesAssembly.noCodesService()
-    let coordinator = NoCodesFlowCoordinator(delegate: configuration.delegate, screenCustomizationDelegate: configuration.screenCustomizationDelegate, noCodesService: noCodesService, viewsAssembly: viewsAssembly())
+    let coordinator = NoCodesFlowCoordinator(delegate: configuration.delegate, screenCustomizationDelegate: configuration.screenCustomizationDelegate, noCodesService: noCodesService, viewsAssembly: viewsAssembly(), logger: miscAssembly.loggerWrapper())
     flowCoordinatorInstance = coordinator
     
     return coordinator
   }
   
-  func viewsAssembly() -> NoCodesViewsAssembly {
-    return NoCodesViewsAssembly(miscAssembly: miscAssembly, servicesAssembly: servicesAssembly)
+  func viewsAssembly() -> ViewsAssembly {
+    return ViewsAssembly(miscAssembly: miscAssembly, servicesAssembly: servicesAssembly)
   }
   
 }

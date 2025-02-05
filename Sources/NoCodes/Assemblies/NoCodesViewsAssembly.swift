@@ -1,5 +1,5 @@
 //
-//  NoCodesViewsAssembly.swift
+//  ViewsAssembly.swift
 //  NoCodes
 //
 //  Created by Suren Sarkisyan on 23.12.2024.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class NoCodesViewsAssembly {
+final class ViewsAssembly {
   
   private let miscAssembly: MiscAssembly
   private let servicesAssembly: ServicesAssembly
@@ -19,7 +19,7 @@ final class NoCodesViewsAssembly {
   }
   
   func viewController(with screen: NoCodes.Screen, delegate: NoCodesViewControllerDelegate) -> NoCodesViewController {
-    return NoCodesViewController(screen: screen, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self)
+    return NoCodesViewController(screen: screen, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
   }
   
 }

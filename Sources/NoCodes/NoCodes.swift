@@ -14,10 +14,14 @@ public final class NoCodes {
   
   /// Use this variable to get the current initialized instance of the Qonversion NoCodes SDK.
   /// Please, use the variable only after initializing the SDK.
-  /// - Returns: the current initialized instance of the ``QonversionNoCodes/NoCodes`` SDK
+  /// - Returns: the current initialized instance of the ``NoCodes/NoCodes`` SDK
   public static let shared = NoCodes()
   private var flowCoordinator: NoCodesFlowCoordinator? = nil
   
+  /// Use this function to initialize the NoCodes SDK.
+  /// - Parameters:
+  ///   - configuration: Data for the SDK configuration.
+  /// - Returns: instance of the SDK.
   @discardableResult
   public static func initialize(with configuration: Configuration) -> NoCodes {
     let assembly: NoCodesAssembly = NoCodesAssembly(configuration: configuration)
@@ -26,19 +30,29 @@ public final class NoCodes {
     return NoCodes.shared
   }
   
-  func set(delegate: NoCodes.Delegate) {
+  /// Use this function to set the delegate.
+  /// - Parameters:
+  ///   - delegate: delegate object.
+  public func set(delegate: NoCodes.Delegate) {
     flowCoordinator?.set(delegate: delegate)
   }
   
-  func set(screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate) {
+  /// Use this function to set the screen customization delegate.
+  /// - Parameters:
+  ///   - delegate: screen customization delegate object.
+  public func set(screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate) {
     flowCoordinator?.set(screenCustomizationDelegate: screenCustomizationDelegate)
   }
   
+  /// Use this function to display the screen.
+  /// - Parameters:
+  ///   - id: identifier of the screen.
   @MainActor
   public func showNoCode(with id: String) async throws {
     try await flowCoordinator?.showNoCode(with: id)
   }
   
+  /// Use this function to close all NoCode screens.
   public func close() {
     flowCoordinator?.close()
   }

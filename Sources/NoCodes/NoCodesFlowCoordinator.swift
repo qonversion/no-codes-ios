@@ -11,17 +11,19 @@ import UIKit
 
 final class NoCodesFlowCoordinator {
   
-  var delegate: NoCodes.Delegate?
-  var screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate?
-  let noCodesService: NoCodesServiceInterface
-  let viewsAssembly: NoCodesViewsAssembly
-  var currentVC: NoCodesViewController?
+  private var delegate: NoCodes.Delegate?
+  private var screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate?
+  private let noCodesService: NoCodesServiceInterface
+  private let viewsAssembly: ViewsAssembly
+  private var currentVC: NoCodesViewController?
+  private var logger: LoggerWrapper!
   
-  init(delegate: NoCodes.Delegate?, screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate?, noCodesService: NoCodesServiceInterface, viewsAssembly: NoCodesViewsAssembly) {
+  init(delegate: NoCodes.Delegate?, screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate?, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper) {
     self.delegate = delegate
     self.screenCustomizationDelegate = screenCustomizationDelegate
     self.noCodesService = noCodesService
     self.viewsAssembly = viewsAssembly
+    self.logger = logger
   }
   
   func set(delegate: NoCodes.Delegate) {

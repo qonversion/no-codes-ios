@@ -37,7 +37,7 @@ final class MiscAssembly {
   
   func loggerWrapper() -> LoggerWrapper {
     if #available(iOS 14.0, *) {
-      let logger = Logger(subsystem: "io.qonversion.sdk", category: "Internal")
+      let logger = Logger(subsystem: "io.qonversion.nocodes.sdk", category: "Internal")
       
       return LoggerWrapper(logger: logger, logLevel: .verbose)
     } else {

@@ -15,8 +15,7 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => "13.0" }
   s.ios.frameworks            = ['UIKit', 'WebKit']
   s.requires_arc              = true
-  s.resource_bundles          = {'Qonversion' => ['Sources/PrivacyInfo.xcprivacy']}
-  #s.pod_target_xcconfig       = { 'DEFINES_MODULE' => 'YES' }
-  s.source_files              = 'NoCodes/**/*.{h,m,swift}'
+  s.resource_bundles          = {'NoCodes' => ['Sources/PrivacyInfo.xcprivacy']}
+  s.source_files              = 'Sources/NoCodes/**/*.{h,m,swift}'
   s.dependency "Qonversion", "5.13.0"
 end

@@ -9,7 +9,6 @@
 import UIKit
 import Qonversion
 import Firebase
-//import SuperwallKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     FirebaseApp.configure()
     
-    let config = Qonversion.Configuration(projectKey: "PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2", launchMode: .subscriptionManagement)
+    let config = Qonversion.Configuration(projectKey: "29X5NL8hYwOuZvc4nn442u4q-TxbV21k", launchMode: .subscriptionManagement)
     config.setEnvironment(.sandbox)
     config.setEntitlementsCacheLifetime(.year)
     Qonversion.initWithConfig(config)
@@ -27,8 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Qonversion.shared().collectAdvertisingId()
     registerForNotifications()
     QonversionSwift.shared.syncStoreKit2Purchases()
-    
-//    Superwall.configure(apiKey: "pk_910bf94cb5112a96544eaf63db60792f8f535c0aa3672864")
     
     return true
   }
