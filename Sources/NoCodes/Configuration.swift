@@ -13,7 +13,7 @@ extension NoCodes {
   public struct Configuration {
     
     /// Your project key from Qonversion Dashboard to setup the SDK
-    let apiKey: String
+    let projectKey: String
     
     /// Delegate
     let delegate: NoCodes.Delegate?
@@ -24,11 +24,11 @@ extension NoCodes {
     /// Initializer of NoCodes Configuration.
     ///
     /// - Parameters:
-    ///   - apiKey: Your project key from Qonversion Dashboard to setup the SDK
+    ///   - projectKey: Your project key from Qonversion Dashboard to setup the SDK
     ///   - delegate: delegate object.
     ///   - screenCustomizationDelegate: screen customization delegate object.
-    public init(apiKey: String, delegate: NoCodes.Delegate? = nil, screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate? = nil) {
-      self.apiKey = apiKey
+    public init(projectKey: String, delegate: NoCodes.Delegate? = nil, screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate? = nil) {
+      self.projectKey = projectKey
       self.delegate = delegate
       self.screenCustomizationDelegate = screenCustomizationDelegate
     }

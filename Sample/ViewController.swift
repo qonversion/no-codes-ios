@@ -29,7 +29,8 @@ class ViewController: UIViewController {
   var products: [String: Qonversion.Product] = [:]
   
   private func presentPaywall() async {
-    NoCodes.initialize(with: NoCodes.Configuration(apiKey: "your_key"))
+    let configuration = NoCodes.Configuration(projectKey: "your_project_key")
+    NoCodes.initialize(with: configuration)
     do {
       try await NoCodes.shared.showNoCode(with: "screen_id")
     } catch {

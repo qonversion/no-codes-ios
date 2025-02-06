@@ -20,11 +20,11 @@ fileprivate enum IntConstants: UInt {
 
 final class MiscAssembly {
   
-  let apiKey: String
+  let projectKey: String
   var servicesAssembly: ServicesAssembly!
   
-  init(apiKey: String) {
-    self.apiKey = apiKey
+  init(projectKey: String) {
+    self.projectKey = projectKey
   }
   
   func encoder() -> JSONEncoder {
@@ -78,7 +78,7 @@ final class MiscAssembly {
   
   func headersBuilder() -> HeadersBuilderInterface {
     let deviceInfoCollector = servicesAssembly.deviceInfoCollector()
-    let headersBuilder = HeadersBuilder(apiKey: apiKey, sdkVersion: SDKLevelConstants.version.rawValue, deviceInfoCollector: deviceInfoCollector)
+    let headersBuilder = HeadersBuilder(projectKey: projectKey, sdkVersion: SDKLevelConstants.version.rawValue, deviceInfoCollector: deviceInfoCollector)
     
     return headersBuilder
   }

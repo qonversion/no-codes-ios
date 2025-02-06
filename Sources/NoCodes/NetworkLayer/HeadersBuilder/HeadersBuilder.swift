@@ -9,12 +9,12 @@ import Foundation
 
 class HeadersBuilder: HeadersBuilderInterface {
     
-    let apiKey: String
+    let projectKey: String
     let sdkVersion: String
     let deviceInfoCollector: DeviceInfoCollectorInterface
     
-    init(apiKey: String, sdkVersion: String, deviceInfoCollector: DeviceInfoCollectorInterface) {
-        self.apiKey = apiKey
+    init(projectKey: String, sdkVersion: String, deviceInfoCollector: DeviceInfoCollectorInterface) {
+        self.projectKey = projectKey
         self.sdkVersion = sdkVersion
         self.deviceInfoCollector = deviceInfoCollector
     }
@@ -23,7 +23,7 @@ class HeadersBuilder: HeadersBuilderInterface {
         let device = deviceInfoCollector.deviceInfo()
         
         request.addValue("application/json; charset=utf-8", forHTTPHeaderField: Header.contentType.rawValue)
-        request.addValue("Bearer " + apiKey, forHTTPHeaderField: Header.authorization.rawValue)
+        request.addValue("Bearer " + projectKey, forHTTPHeaderField: Header.authorization.rawValue)
         request.addValue(device.appVersion ?? "", forHTTPHeaderField: Header.appVersion.rawValue)
         request.addValue(device.country ?? "", forHTTPHeaderField: Header.country.rawValue)
         request.addValue(device.language ?? "", forHTTPHeaderField: Header.userLocale.rawValue)
