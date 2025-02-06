@@ -30,7 +30,7 @@ public final class NoCodes {
     return NoCodes.shared
   }
   
-  /// Use this function to set the delegate.
+  /// se this function to set the delegate that will report what is happening inside NoCodes, what actions are being executed/failed, and so on.
   /// - Parameters:
   ///   - delegate: delegate object.
   public func set(delegate: NoCodes.Delegate) {

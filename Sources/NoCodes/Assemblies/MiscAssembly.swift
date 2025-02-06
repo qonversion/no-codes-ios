@@ -18,10 +18,6 @@ fileprivate enum IntConstants: UInt {
   case maxRequestsPerSecond = 5
 }
 
-fileprivate enum StringConstants: String {
-  case requestsStorageKey = "requests"
-}
-
 final class MiscAssembly {
   
   let apiKey: String

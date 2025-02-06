@@ -21,7 +21,7 @@ extension NoCodes {
     /// Screen customization delegate
     let screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate?
     
-    /// Initializer of NoCodes.
+    /// Initializer of NoCodes Configuration.
     ///
     /// - Parameters:
     ///   - apiKey: Your project key from Qonversion Dashboard to setup the SDK
