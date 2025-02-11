@@ -4,8 +4,7 @@ Pod::Spec.new do |s|
   s.version      = '0.0.1'
   s.summary      = 'qonversion.io'
   s.description  = <<-DESC
-  Deep Analytics for iOS Subscriptions
-    Qonversion is the data platform to power in-app subscription revenue growth. Qonversion allows fast in-app subscriptions implementation. It provides the back-end infrastructure to validate user receipts and manage cross-platform user access to paid content on your app, so you do not need to build your own server. Qonversion also provides comprehensive subscription analytics and out-of-the-box integrations with the leading marketing, attribution, and product analytics platforms.
+  Qonversion No-Codes SDK is a standalone software development kit designed to help you build and customize paywall screens without writing code. It allows seamless integration of pre-built subscription UI components, enabling a faster and more flexible way to design paywalls directly within your app. While it operates independently, the No-Codes SDK relies on the Qonversion SDK as a dependency to handle in-app purchases and subscription management.
   DESC
   s.homepage                  = 'https://github.com/qonversion/no-codes-ios'
   s.license                   = { :type => 'MIT', :file => 'LICENSE' }

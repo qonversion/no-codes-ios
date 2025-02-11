@@ -79,9 +79,6 @@ final class NoCodesViewController: UIViewController {
     configuration.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
     
     webView = WKWebView(frame: .zero, configuration: configuration)
-    
-    webView.scrollView.bounces = false
-    webView.scrollView.isScrollEnabled = false
     webView.scrollView.contentInsetAdjustmentBehavior = .never
     
     webView.scrollView.showsHorizontalScrollIndicator = false
