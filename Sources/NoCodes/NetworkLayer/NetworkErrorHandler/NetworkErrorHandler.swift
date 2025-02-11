@@ -44,7 +44,6 @@ class NetworkErrorHandler: NetworkErrorHandlerInterface {
         if let additionalInfo {
             info = additionalInfo
         } else {
-            #warning("Don't forget to check the real value and remove this field if the result is useless")
             info[ErrorConstants.messageKey.rawValue] = HTTPURLResponse.localizedString(forStatusCode: response.statusCode)
         }
 
