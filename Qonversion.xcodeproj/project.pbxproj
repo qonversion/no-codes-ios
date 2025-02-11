@@ -59,7 +59,6 @@
 		7090EDFB2D52539A001E9864 /* QonversionErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDA92D52539A001E9864 /* QonversionErrorType.swift */; };
 		7090EDFC2D52539A001E9864 /* NetworkProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDB32D52539A001E9864 /* NetworkProviderInterface.swift */; };
 		7090EDFD2D52539A001E9864 /* RateLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDB52D52539A001E9864 /* RateLimiter.swift */; };
-		7090EDFE2D52539A001E9864 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 7090EDCA2D52539A001E9864 /* index.html */; };
 		70CB7CE42C2DB37A00241FF1 /* qonversion_ios_fallbacks.json in Resources */ = {isa = PBXBuildFile; fileRef = 70CB7CE32C2DB37900241FF1 /* qonversion_ios_fallbacks.json */; };
 		70D9CBDF2B03BF07003F1878 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70D9CBDE2B03BF07003F1878 /* StoreKit.framework */; };
 		891ECE0B2773614600DF6A56 /* AdServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891ECE0927734B8900DF6A56 /* AdServices.framework */; };
@@ -98,15 +97,6 @@
 		459DABD8243E33C20011ECF3 /* Qonversion.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = Qonversion.modulemap; sourceTree = "<group>"; };
 		459DABDA243E33C20011ECF3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CADC55F2759181A004FDC10 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
-		6A8A603929D48B1A008EC7D8 /* QNAPIClientIntegrationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNAPIClientIntegrationTests.m; sourceTree = "<group>"; };
-		6A95DE9829E007A600350BD6 /* init_request_main_data.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = init_request_main_data.json; sourceTree = "<group>"; };
-		6A95DE9B29E009E000350BD6 /* XCTestCase+IntegrationTestJSON.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+IntegrationTestJSON.m"; sourceTree = "<group>"; };
-		6A95DE9D29E009E900350BD6 /* XCTestCase+IntegrationTestJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+IntegrationTestJSON.h"; sourceTree = "<group>"; };
-		6A95DE9E29E0119C00350BD6 /* QNIntegrationTestConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNIntegrationTestConstants.h; sourceTree = "<group>"; };
-		6A95DE9F29E011A700350BD6 /* QNIntegrationTestConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNIntegrationTestConstants.m; sourceTree = "<group>"; };
-		6A95DEA129E40E9900350BD6 /* QNOutagerIntegrationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNOutagerIntegrationTests.m; sourceTree = "<group>"; };
-		6A95DEA329E40F2100350BD6 /* XCTestCase+IntegrationTestsHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+IntegrationTestsHelpers.h"; sourceTree = "<group>"; };
-		6A95DEA429E40F2E00350BD6 /* XCTestCase+IntegrationTestsHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+IntegrationTestsHelpers.m"; sourceTree = "<group>"; };
 		701FFC712D4CDF63003C1577 /* NoCodes.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = NoCodes.podspec; sourceTree = "<group>"; };
 		7052136F29F1807A00164AAF /* PurchasesMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesMapper.swift; sourceTree = "<group>"; };
 		7090ED942D52539A001E9864 /* MiscAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscAssembly.swift; sourceTree = "<group>"; };
@@ -147,7 +137,6 @@
 		7090EDC62D52539A001E9864 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		7090EDC82D52539A001E9864 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		7090EDC92D52539A001E9864 /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
-		7090EDCA2D52539A001E9864 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		7090EDCB2D52539A001E9864 /* NoCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoCodes.h; sourceTree = "<group>"; };
 		7090EDCC2D52539A001E9864 /* NoCodes.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = NoCodes.docc; sourceTree = "<group>"; };
 		7090EDCD2D52539A001E9864 /* NoCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodes.swift; sourceTree = "<group>"; };
@@ -235,7 +224,6 @@
 				459DABD3243E33C20011ECF3 /* Framework */,
 				459DAB6B243E329F0011ECF3 /* Sources */,
 				454EF63D24E5CC580070581E /* Sample */,
-				6A8A604029DAD363008EC7D8 /* IntegrationTests */,
 				459DAB6A243E329F0011ECF3 /* Products */,
 				447A040961B196621A548033 /* Pods */,
 				BB6B3C9FD9EFBC9E1604507D /* Frameworks */,
@@ -303,46 +291,6 @@
 				45239D6E2517CEB00085D0A8 /* QonversionFramework.h */,
 			);
 			path = Framework;
-			sourceTree = "<group>";
-		};
-		6A8A604029DAD363008EC7D8 /* IntegrationTests */ = {
-			isa = PBXGroup;
-			children = (
-				6A95DE9A29E0083D00350BD6 /* Helpers */,
-				6A95DE9229E0071300350BD6 /* Resources */,
-				6A8A603929D48B1A008EC7D8 /* QNAPIClientIntegrationTests.m */,
-				6A95DEA129E40E9900350BD6 /* QNOutagerIntegrationTests.m */,
-				6A95DE9E29E0119C00350BD6 /* QNIntegrationTestConstants.h */,
-				6A95DE9F29E011A700350BD6 /* QNIntegrationTestConstants.m */,
-			);
-			path = IntegrationTests;
-			sourceTree = "<group>";
-		};
-		6A95DE9229E0071300350BD6 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				6A95DE9329E0071C00350BD6 /* Stubs */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		6A95DE9329E0071C00350BD6 /* Stubs */ = {
-			isa = PBXGroup;
-			children = (
-				6A95DE9829E007A600350BD6 /* init_request_main_data.json */,
-			);
-			path = Stubs;
-			sourceTree = "<group>";
-		};
-		6A95DE9A29E0083D00350BD6 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				6A95DE9B29E009E000350BD6 /* XCTestCase+IntegrationTestJSON.m */,
-				6A95DE9D29E009E900350BD6 /* XCTestCase+IntegrationTestJSON.h */,
-				6A95DEA429E40F2E00350BD6 /* XCTestCase+IntegrationTestsHelpers.m */,
-				6A95DEA329E40F2100350BD6 /* XCTestCase+IntegrationTestsHelpers.h */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		70523C8D29F2853F009F01D2 /* Recovered References */ = {
@@ -522,7 +470,6 @@
 				7090EDC72D52539A001E9864 /* Utils */,
 				7090EDC82D52539A001E9864 /* Configuration.swift */,
 				7090EDC92D52539A001E9864 /* Delegate.swift */,
-				7090EDCA2D52539A001E9864 /* index.html */,
 				7090EDCB2D52539A001E9864 /* NoCodes.h */,
 				7090EDCC2D52539A001E9864 /* NoCodes.docc */,
 				7090EDCD2D52539A001E9864 /* NoCodes.swift */,
@@ -659,7 +606,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				701FFC722D4CDF63003C1577 /* NoCodes.podspec in Resources */,
-				7090EDFE2D52539A001E9864 /* index.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
