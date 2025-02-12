@@ -42,7 +42,6 @@ The No-Code Builder is currently in **private beta**, with access granted only t
 | Unity | Coming Soon | 🚧 In Progress |
 | Cordova | Coming Soon | 🚧 In Progress |
 
---
 
 ## **📖 Learn More & Get Support**
 
@@ -50,7 +49,6 @@ The No-Code Builder is currently in **private beta**, with access granted only t
 
 🚀 **Start building and optimizing your paywalls today — without writing a single line of code!**
 
---
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
