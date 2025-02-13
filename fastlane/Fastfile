@@ -1,15 +1,7 @@
 
-PROJECT_NAME = "Qonversion"
-PROJECT_SCHEME = "Qonversion"
+PROJECT_NAME = "NoCodes"
+PROJECT_SCHEME = "NoCodes"
 XCODE_PROJECT = "./#{PROJECT_NAME}.xcodeproj"
-
-lane :tests do
-  runTests("QonversionTests")
-end
-
-lane :integration_tests do
-  runTests("IntegrationTests")
-end
 
 lane :patch do
   tag = get_tag
@@ -25,15 +17,6 @@ lane :minor do
   push_tag(new_tag)
 end
 
-lane :set_outager_url do |options|
-  url = options[:url]
-
-  path = Dir['../**/QNOutagerIntegrationTests.m'].first
-  regex = /\<paste outager link here\>/
-
-  update_file(path, regex, url)
-end
-
 lane :bump do |options|
   new_version = options[:version]
 
@@ -45,12 +28,12 @@ lane :bump do |options|
   )
 
   version_bump_podspec(
-    path: "Qonversion.podspec", 
+    path: "NoCodes.podspec", 
     version_number: new_version
   )
 
-  file_path = Dir['../**/QONConfiguration.m'].first
-  update_file(file_path, /NSString \*const kSDKVersion = @".*";/, "NSString *const kSDKVersion = @\"#{new_version}\";")
+  file_path = Dir['../**/MiscAssembly.swift'].first
+  update_file(file_path, /case version = ".*"/, "case version = \"#{new_version}\"")
 end
 
 def get_tag
