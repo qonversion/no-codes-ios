@@ -23,17 +23,17 @@ extension NoCodes {
     
     /// Called when NoCodes flow starts executing an action
     /// - Parameters:
-    ///   - action: NoCodes action
+    ///   - action: ``NoCodes/NoCodes/Action``
     func noCodesStartsExecuting(action: NoCodes.Action)
     
     /// Called when NoCodes flow fails executing an action
     /// - Parameters:
-    ///   - action: NoCodes action
+      ///   - action: ``NoCodes/NoCodes/Action``
     func noCodesFailedExecuting(action: NoCodes.Action, error: Error?)
     
     /// Called when NoCodes flow finishes executing an action
     /// - Parameters:
-    ///   - action: NoCodes action
+    ///   - action: ``NoCodes/NoCodes/Action``
     /// For example, if the user made a purchase then action.type == .purchase
     func noCodesFinishedExecuting(action: NoCodes.Action)
     
