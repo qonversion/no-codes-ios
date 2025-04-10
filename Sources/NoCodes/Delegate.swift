@@ -19,7 +19,7 @@ extension NoCodes {
     /// Called when NoCodes screen is shown
     /// - Parameters:
     ///   - id: Screen identifier
-    func noCodesShownScreen(id: String)
+    func noCodesHasShownScreen(id: String)
     
     /// Called when NoCodes flow starts executing an action
     /// - Parameters:
@@ -66,7 +66,7 @@ public extension NoCodes.Delegate {
     return nil
   }
   
-  func noCodesShownScreen(id: String) {
+  func noCodesHasShownScreen(id: String) {
     
   }
   

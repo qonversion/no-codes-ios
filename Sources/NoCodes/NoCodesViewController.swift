@@ -24,7 +24,7 @@ enum Constants: String {
 
 protocol NoCodesViewControllerDelegate {
   
-  func noCodesShownScreen(id: String)
+  func noCodesHasShownScreen(id: String)
   
   func noCodesStartsExecuting(action: NoCodes.Action)
   
@@ -105,7 +105,7 @@ final class NoCodesViewController: UIViewController {
       do {
         let screen: NoCodes.Screen = try await noCodesService.loadScreen(with: screenId)
         
-        delegate.noCodesShownScreen(id: screen.id)
+        delegate.noCodesHasShownScreen(id: screen.id)
         
         webView.loadHTMLString(screen.html, baseURL: nil)
       } catch {

@@ -79,8 +79,8 @@ final class NoCodesFlowCoordinator {
 
 extension NoCodesFlowCoordinator: NoCodesViewControllerDelegate {
   
-  func noCodesShownScreen(id: String) {
-    delegate?.noCodesShownScreen(id: id)
+  func noCodesHasShownScreen(id: String) {
+    delegate?.noCodesHasShownScreen(id: id)
   }
   
   func noCodesStartsExecuting(action: NoCodes.Action) {
