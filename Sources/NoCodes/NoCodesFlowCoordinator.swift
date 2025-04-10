@@ -39,10 +39,8 @@ final class NoCodesFlowCoordinator {
   }
   
   @MainActor
-  func showNoCode(with id: String) async throws {
-    let screen: NoCodes.Screen = try await noCodesService.loadScreen(with: id)
-    
-    let viewController: NoCodesViewController = viewsAssembly.viewController(with: screen, delegate: self)
+  func showNoCode(with id: String) {
+    let viewController: NoCodesViewController = viewsAssembly.viewController(with: id, delegate: self)
     currentVC = viewController
     
     guard let presentationViewController: UIViewController = delegate?.controllerForNavigation() ?? topLevelViewController() else { return }
@@ -89,8 +87,8 @@ extension NoCodesFlowCoordinator: NoCodesViewControllerDelegate {
     delegate?.noCodesStartsExecuting(action: action)
   }
   
-  func noCodesFailedExecuting(action: NoCodes.Action, error: Error?) {
-    delegate?.noCodesFailedExecuting(action: action, error: error)
+  func noCodesFailedToExecute(action: NoCodes.Action, error: Error?) {
+    delegate?.noCodesFailedToExecute(action: action, error: error)
   }
   
   func noCodesFinishedExecuting(action: NoCodes.Action) {
@@ -99,6 +97,10 @@ extension NoCodesFlowCoordinator: NoCodesViewControllerDelegate {
   
   func noCodesFinished() {
     delegate?.noCodesFinished()
+  }
+  
+  func noCodesFailedToLoadScreen() {
+    delegate?.noCodesFailedToLoadScreen()
   }
   
 }

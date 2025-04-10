@@ -28,16 +28,6 @@ class ViewController: UIViewController {
   var permissions: [String: Qonversion.Entitlement] = [:]
   var products: [String: Qonversion.Product] = [:]
   
-  private func presentPaywall() async {
-    let configuration = NoCodes.Configuration(projectKey: "your_project_key")
-    NoCodes.initialize(with: configuration)
-    do {
-      try await NoCodes.shared.showNoCode(with: "screen_id")
-    } catch {
-      
-    }
-  }
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -131,10 +121,6 @@ class ViewController: UIViewController {
   }
   
   @IBAction func didTapMainProductSubscriptionButton(_ sender: Any) {
-    Task {
-      await presentPaywall()
-    }
-    return;
     if let product = self.products[firstPurchaseButtonProduct] {
       activityIndicator.startAnimating()
       Qonversion.shared().purchase(product.qonversionID) { [weak self] (result, error, flag) in
@@ -153,6 +139,12 @@ class ViewController: UIViewController {
         
       }
     }
+  }
+  
+  @IBAction func didTapShowPaywallButton(_ sender: Any) {
+    let configuration = NoCodes.Configuration(projectKey: "your_project_key")
+    NoCodes.initialize(with: configuration)
+    NoCodes.shared.showNoCode(with: "screen_id")
   }
   
   @IBAction func didTapInAppPurchaseButton(_ sender: Any) {

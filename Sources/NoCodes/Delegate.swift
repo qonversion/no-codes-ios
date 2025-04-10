@@ -26,10 +26,10 @@ extension NoCodes {
     ///   - action: ``NoCodes/NoCodes/Action``
     func noCodesStartsExecuting(action: NoCodes.Action)
     
-    /// Called when NoCodes flow fails executing an action
+    /// Called when NoCodes flow fails to execute an action
     /// - Parameters:
     ///   - action: ``NoCodes/NoCodes/Action``
-    func noCodesFailedExecuting(action: NoCodes.Action, error: Error?)
+    func noCodesFailedToExecute(action: NoCodes.Action, error: Error?)
     
     /// Called when NoCodes flow finishes executing an action
     /// - Parameters:
@@ -39,6 +39,10 @@ extension NoCodes {
     
     /// Called when NoCodes flow is finished and the NoCodes screen is closed
     func noCodesFinished()
+    
+    /// Called when NoCodes screen loading failed
+    /// Don't forget to close the screen. `NoCodes.shared.close()`
+    func noCodesFailedToLoadScreen()
     
   }
   
@@ -70,7 +74,7 @@ public extension NoCodes.Delegate {
     
   }
   
-  func noCodesFailedExecuting(action: NoCodes.Action) {
+  func noCodesFailedToExecute(action: NoCodes.Action) {
     
   }
   
@@ -79,6 +83,10 @@ public extension NoCodes.Delegate {
   }
   
   func noCodesFinished() {
+    
+  }
+  
+  func noCodesFailedToLoadScreen() {
     
   }
   
