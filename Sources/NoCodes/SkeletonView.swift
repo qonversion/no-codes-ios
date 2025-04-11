@@ -26,8 +26,8 @@ struct SkeletonViewConstants {
   static let defaultLayerColor = UIColor(red: 223.0/255.0, green: 223.0/255.0, blue: 223.0/255.0, alpha: 1.0)
   static let lightModeAnimationFinish: Float = 0.4
   static let lightModeAnimationStart: Float = 0.7
-  static let darkModeAnimationFinish: Float = 0.5
-  static let darkModeAnimationStart: Float = 0.8
+  static let darkModeAnimationFinish: Float = 0.15
+  static let darkModeAnimationStart: Float = 0.25
   static let animationDuration: CGFloat = 0.8
   static let cornerRadius = 4.0
   static let darkModeColor: UIColor = .black
