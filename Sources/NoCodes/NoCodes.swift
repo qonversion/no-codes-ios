@@ -48,8 +48,8 @@ public final class NoCodes {
   /// - Parameters:
   ///   - id: identifier of the screen.
   @MainActor
-  public func showNoCode(with id: String) async throws {
-    try await flowCoordinator?.showNoCode(with: id)
+  public func showNoCode(with id: String) {
+    flowCoordinator?.showNoCode(with: id)
   }
   
   /// Use this function to close all ``NoCodes/NoCodes`` screens.
