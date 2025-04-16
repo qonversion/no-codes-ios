@@ -41,7 +41,7 @@ extension NoCodes {
     func noCodesFinished()
     
     /// Called when NoCodes screen loading failed
-    /// Don't forget to close the screen. `NoCodes.shared.close()`
+    /// Don't forget to close the screen using `NoCodes.shared.close()`
     func noCodesFailedToLoadScreen()
     
   }
