@@ -110,6 +110,7 @@ final class NoCodesViewController: UIViewController {
         webView.loadHTMLString(screen.html, baseURL: nil)
       } catch {
         delegate.noCodesFailedToLoadScreen()
+        logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
       }
     }
   }
