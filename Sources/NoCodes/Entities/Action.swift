@@ -38,6 +38,9 @@ public extension NoCodes {
     
     /// Internal action for store products loading
     case loadProducts
+    
+    /// Internal action that indicates that the screen is ready to be shown
+    case showScreen
   }
 
   /// Action performed in the NoCodes
