@@ -83,7 +83,6 @@ final class NoCodesViewController: UIViewController {
     configuration.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
     
     webView = WKWebView(frame: .zero, configuration: configuration)
-    webView.navigationDelegate = self
     webView.scrollView.contentInsetAdjustmentBehavior = .never
     
     webView.scrollView.showsHorizontalScrollIndicator = false
@@ -138,20 +137,16 @@ final class NoCodesViewController: UIViewController {
   
 }
 
-extension NoCodesViewController: WKNavigationDelegate {
-  
-  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    removeSkeleton()
-  }
-  
-}
-
 extension NoCodesViewController: WKScriptMessageHandler {
   
   func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     guard let body = message.body as? [String: Any] else { return }
     
     let action: NoCodes.Action = noCodesMapper.map(rawAction: body)
+    
+    if action.type == .showScreen {
+      return removeSkeleton()
+    }
     
     if action.type != .loadProducts {
       delegate.noCodesStartsExecuting(action: action)
