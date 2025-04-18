@@ -14,6 +14,8 @@ import NoCodes
 
 class ViewController: UIViewController {
   
+  let projectKey = "PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2"
+  let screenContextKey = "your_screen_context_key"
   let firstPurchaseButtonProduct = "weekly"
   let secondPurchaseButtonProduct = "in_app"
   
@@ -141,10 +143,10 @@ class ViewController: UIViewController {
   }
 
   @IBAction func didTapShowPaywallButton(_ sender: Any) {
-    let configuration = NoCodes.Configuration(projectKey: "PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2")
+    let configuration = NoCodes.Configuration(projectKey: projectKey)
     NoCodes.initialize(with: configuration)
     NoCodes.shared.set(screenCustomizationDelegate: self)
-    NoCodes.shared.showNoCode(withContextKey: "Uq9VX4m8")
+    NoCodes.shared.showNoCode(withContextKey: screenContextKey)
   }
   
   @IBAction func didTapInAppPurchaseButton(_ sender: Any) {
