@@ -15,6 +15,7 @@
 		45754AE725814C7500FCA376 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45754AE625814C7500FCA376 /* iAd.framework */; };
 		4CADC5602759181A004FDC10 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CADC55F2759181A004FDC10 /* AuthViewController.swift */; };
 		701FFC722D4CDF63003C1577 /* NoCodes.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701FFC712D4CDF63003C1577 /* NoCodes.podspec */; };
+		7080E8A12D9EB8B3002995D7 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080E8A02D9EB8B3002995D7 /* SkeletonView.swift */; };
 		7090EDD22D52539A001E9864 /* NoCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7090EDCB2D52539A001E9864 /* NoCodes.h */; };
 		7090EDD32D52539A001E9864 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDA42D52539A001E9864 /* ApiError.swift */; };
 		7090EDD42D52539A001E9864 /* NoCodesMapperInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDA22D52539A001E9864 /* NoCodesMapperInterface.swift */; };
@@ -76,7 +77,7 @@
 		4502E451257FDF5E006FC750 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = "../../../../Volumes/OCMock 3.7.1/macOS/OCMock.framework"; sourceTree = "<group>"; };
 		4502E457257FDF90006FC750 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = "../../../../Volumes/OCMock 3.7.1/iOS framework/OCMock.framework"; sourceTree = "<group>"; };
 		45239D6E2517CEB00085D0A8 /* QonversionFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QonversionFramework.h; sourceTree = "<group>"; };
-		4531CBC724578D300022C422 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		4531CBC724578D300022C422 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		454EF63C24E5CC580070581E /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		454EF63E24E5CC580070581E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		454EF64224E5CC590070581E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		4CADC55F2759181A004FDC10 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		701FFC712D4CDF63003C1577 /* NoCodes.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = NoCodes.podspec; sourceTree = "<group>"; };
 		7052136F29F1807A00164AAF /* PurchasesMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesMapper.swift; sourceTree = "<group>"; };
+		7080E8A02D9EB8B3002995D7 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		7090ED942D52539A001E9864 /* MiscAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscAssembly.swift; sourceTree = "<group>"; };
 		7090ED952D52539A001E9864 /* NoCodesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesAssembly.swift; sourceTree = "<group>"; };
 		7090ED962D52539A001E9864 /* NoCodesViewsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesViewsAssembly.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				7090EDCE2D52539A001E9864 /* NoCodesFlowCoordinator.swift */,
 				7090EDCF2D52539A001E9864 /* NoCodesNavigationController.swift */,
 				7090EDD02D52539A001E9864 /* NoCodesViewController.swift */,
+				7080E8A02D9EB8B3002995D7 /* SkeletonView.swift */,
 			);
 			path = NoCodes;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 		BB6B3C9FD9EFBC9E1604507D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7080E8A22D9ECE48002995D7 /* Qonversion.framework */,
 				70D9CBDE2B03BF07003F1878 /* StoreKit.framework */,
 				894278832759351C00A8A6EC /* GoogleSignIn.framework */,
 				891ECE0927734B8900DF6A56 /* AdServices.framework */,
@@ -677,6 +681,7 @@
 				7090EDD52D52539A001E9864 /* Delegate.swift in Sources */,
 				7090EDD62D52539A001E9864 /* NoCodes.swift in Sources */,
 				7090EDD72D52539A001E9864 /* Utils.swift in Sources */,
+				7080E8A12D9EB8B3002995D7 /* SkeletonView.swift in Sources */,
 				7090EDD82D52539A001E9864 /* Device.swift in Sources */,
 				7090EDD92D52539A001E9864 /* NetworkErrorHandler.swift in Sources */,
 				7090EDDA2D52539A001E9864 /* NetworkErrorHandlerInterface.swift in Sources */,

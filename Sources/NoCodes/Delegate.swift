@@ -19,26 +19,30 @@ extension NoCodes {
     /// Called when NoCodes screen is shown
     /// - Parameters:
     ///   - id: Screen identifier
-    func noCodesShownScreen(id: String)
+    func noCodesHasShownScreen(id: String)
     
     /// Called when NoCodes flow starts executing an action
     /// - Parameters:
-    ///   - action: NoCodes action
+    ///   - action: ``NoCodes/NoCodes/Action``
     func noCodesStartsExecuting(action: NoCodes.Action)
     
-    /// Called when NoCodes flow fails executing an action
+    /// Called when NoCodes flow fails to execute an action
     /// - Parameters:
-    ///   - action: NoCodes action
-    func noCodesFailedExecuting(action: NoCodes.Action, error: Error?)
+    ///   - action: ``NoCodes/NoCodes/Action``
+    func noCodesFailedToExecute(action: NoCodes.Action, error: Error?)
     
     /// Called when NoCodes flow finishes executing an action
     /// - Parameters:
-    ///   - action: NoCodes action
+    ///   - action: ``NoCodes/NoCodes/Action``
     /// For example, if the user made a purchase then action.type == .purchase
     func noCodesFinishedExecuting(action: NoCodes.Action)
     
     /// Called when NoCodes flow is finished and the NoCodes screen is closed
     func noCodesFinished()
+    
+    /// Called when NoCodes screen loading failed
+    /// Don't forget to close the screen using `NoCodes.shared.close()`
+    func noCodesFailedToLoadScreen()
     
   }
   
@@ -62,7 +66,7 @@ public extension NoCodes.Delegate {
     return nil
   }
   
-  func noCodesShownScreen(id: String) {
+  func noCodesHasShownScreen(id: String) {
     
   }
   
@@ -70,7 +74,7 @@ public extension NoCodes.Delegate {
     
   }
   
-  func noCodesFailedExecuting(action: NoCodes.Action) {
+  func noCodesFailedToExecute(action: NoCodes.Action) {
     
   }
   
@@ -79,6 +83,10 @@ public extension NoCodes.Delegate {
   }
   
   func noCodesFinished() {
+    
+  }
+  
+  func noCodesFailedToLoadScreen() {
     
   }
   

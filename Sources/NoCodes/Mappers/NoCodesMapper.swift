@@ -20,7 +20,8 @@ final class NoCodesMapper: NoCodesMapperInterface {
       "restore": .restore,
       "close": .close,
       "closeAll": .closeAll,
-      "getProducts": .loadProducts
+      "getProducts": .loadProducts,
+      "showScreen": .showScreen
     ]
     
     let data: [String: Any] = rawAction["data"] as? [String: Any] ?? [:]
