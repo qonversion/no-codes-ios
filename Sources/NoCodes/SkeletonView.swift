@@ -34,6 +34,7 @@ struct SkeletonViewConstants {
   static let lightModeColor: UIColor = .white
 }
 
+
 class SkeletonView: UIView {
   
   private var botView: UIView

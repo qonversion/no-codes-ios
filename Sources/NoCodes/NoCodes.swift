@@ -46,7 +46,16 @@ public final class NoCodes {
   
   /// Use this function to display the screen.
   /// - Parameters:
+  ///   - id: the context key of the screen.
+  @MainActor
+  public func showNoCode(withContextKey contextKey: String) {
+    flowCoordinator?.showNoCode(withContextKey: contextKey)
+  }
+  
+  /// Use this function to display the screen.
+  /// - Parameters:
   ///   - id: identifier of the screen.
+  @available(*, deprecated, message: "Use showNoCode(withContextKey:) instead")
   @MainActor
   public func showNoCode(with id: String) {
     flowCoordinator?.showNoCode(with: id)

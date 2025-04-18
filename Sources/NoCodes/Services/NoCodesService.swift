@@ -27,4 +27,15 @@ class NoCodesService: NoCodesServiceInterface {
     }
   }
   
+  func loadScreen(withContextKey contextKey: String) async throws -> NoCodes.Screen {
+    do {
+      let request = Request.getScreenByContextKey(contextKey: contextKey)
+      let screen: NoCodes.Screen = try await requestProcessor.process(request: request, responseType: NoCodes.Screen.self)
+      
+      return screen
+    } catch {
+      throw QonversionError(type: .screenLoadingFailed, message: nil, error: error)
+    }
+  }
+  
 }

@@ -43,9 +43,23 @@ final class NoCodesFlowCoordinator {
     let viewController: NoCodesViewController = viewsAssembly.viewController(with: id, delegate: self)
     currentVC = viewController
     
-    guard let presentationViewController: UIViewController = delegate?.controllerForNavigation() ?? topLevelViewController() else { return }
-    
     let presentationConfiguration: NoCodes.PresentationConfiguration = screenCustomizationDelegate?.presentationConfigurationForScreen(id: id) ?? NoCodes.PresentationConfiguration.defaultConfiguration()
+    
+    showNoCode(viewController, presentationConfiguration)
+  }
+  
+  @MainActor
+  func showNoCode(withContextKey contextKey: String) {
+    let viewController: NoCodesViewController = viewsAssembly.viewController(withContextKey: contextKey, delegate: self)
+    currentVC = viewController
+    
+    let presentationConfiguration: NoCodes.PresentationConfiguration = screenCustomizationDelegate?.presentationConfigurationForScreen(contextKey: contextKey) ?? NoCodes.PresentationConfiguration.defaultConfiguration()
+    
+    showNoCode(viewController, presentationConfiguration)
+  }
+  
+  private func showNoCode(_ viewController: NoCodesViewController, _ presentationConfiguration: NoCodes.PresentationConfiguration) {
+    guard let presentationViewController: UIViewController = delegate?.controllerForNavigation() ?? topLevelViewController() else { return }
     
     if presentationConfiguration.presentationStyle == .push {
       presentationViewController.navigationController?.pushViewController(viewController, animated: presentationConfiguration.animated)

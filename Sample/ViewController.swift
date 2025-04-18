@@ -34,7 +34,6 @@ class ViewController: UIViewController {
     navigationController?.isNavigationBarHidden = true
     
     Qonversion.Automations.shared().setDelegate(self)
-    Qonversion.Automations.shared().setScreenCustomizationDelegate(self)
     
     subscriptionTitleLabel.text = ""
     mainProductSubscriptionButton.layer.cornerRadius = 20.0
@@ -140,11 +139,12 @@ class ViewController: UIViewController {
       }
     }
   }
-  
+
   @IBAction func didTapShowPaywallButton(_ sender: Any) {
-    let configuration = NoCodes.Configuration(projectKey: "your_project_key")
+    let configuration = NoCodes.Configuration(projectKey: "PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2")
     NoCodes.initialize(with: configuration)
-    NoCodes.shared.showNoCode(with: "screen_id")
+    NoCodes.shared.set(screenCustomizationDelegate: self)
+    NoCodes.shared.showNoCode(withContextKey: "Uq9VX4m8")
   }
   
   @IBAction func didTapInAppPurchaseButton(_ sender: Any) {
@@ -256,8 +256,8 @@ extension ViewController: Qonversion.AutomationsDelegate {
   }
 }
 
-extension ViewController: Qonversion.ScreenCustomizationDelegate {
-  func presentationConfigurationForScreen(_ screenId: String) -> Qonversion.ScreenPresentationConfiguration {
+extension ViewController: NoCodes.ScreenCustomizationDelegate {
+  private func presentationConfigurationForScreen(contextKey: String) -> Qonversion.ScreenPresentationConfiguration {
     return Qonversion.ScreenPresentationConfiguration(presentationStyle: .push, animated: true)
   }
 }
