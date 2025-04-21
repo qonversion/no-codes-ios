@@ -24,30 +24,37 @@ enum Constants: String {
 
 protocol NoCodesViewControllerDelegate {
   
-  func noCodesShownScreen(id: String)
+  func noCodesHasShownScreen(id: String)
   
   func noCodesStartsExecuting(action: NoCodes.Action)
   
-  func noCodesFailedExecuting(action: NoCodes.Action, error: Error?)
+  func noCodesFailedToExecute(action: NoCodes.Action, error: Error?)
   
   func noCodesFinishedExecuting(action: NoCodes.Action)
   
   func noCodesFinished()
+  
+  func noCodesFailedToLoadScreen()
+  
 }
 
 final class NoCodesViewController: UIViewController {
   
   private var webView: WKWebView!
   private var activityIndicator: UIActivityIndicatorView!
+  private var screenId: String?
+  private var contextKey: String?
   private var screen: NoCodes.Screen?
   private var noCodesService: NoCodesServiceInterface!
   private var noCodesMapper: NoCodesMapperInterface!
   private var viewsAssembly: ViewsAssembly!
   private var delegate: NoCodesViewControllerDelegate!
   private var logger: LoggerWrapper!
+  private var skeletonView: SkeletonView!
   
-  init(screen: NoCodes.Screen, delegate: NoCodesViewControllerDelegate, noCodesMapper: NoCodesMapperInterface, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper) {
-    self.screen = screen
+  init(screenId: String?, contextKey: String?, delegate: NoCodesViewControllerDelegate, noCodesMapper: NoCodesMapperInterface, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper) {
+    self.screenId = screenId
+    self.contextKey = contextKey
     self.noCodesMapper = noCodesMapper
     self.noCodesService = noCodesService
     self.viewsAssembly = viewsAssembly
@@ -55,6 +62,9 @@ final class NoCodesViewController: UIViewController {
     self.logger = logger
     
     super.init(nibName: nil, bundle: nil)
+    
+    skeletonView = SkeletonView(frame: view.frame, interfaceStyle: traitCollection.userInterfaceStyle)
+    addSkeleton()
   }
   
   required init?(coder: NSCoder) {
@@ -64,14 +74,10 @@ final class NoCodesViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    guard let screen else { return logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue) }
-    
-    delegate.noCodesShownScreen(id: screen.id)
-    
     let userContentController = WKUserContentController()
     userContentController.add(self, name: "noCodesMessageHandler")
     let configuration = WKWebViewConfiguration()
-    configuration.userContentController = userContentController;
+    configuration.userContentController = userContentController
     
     configuration.allowsInlineMediaPlayback = true
     configuration.allowsAirPlayForMediaPlayback = true
@@ -90,11 +96,32 @@ final class NoCodesViewController: UIViewController {
     activityIndicator.hidesWhenStopped = true
     view.addSubview(activityIndicator)
     
-    webView.loadHTMLString(screen.html, baseURL: nil)
-    
+    view.setNeedsLayout()
+    view.layoutIfNeeded()
     view.layoutSubviews()
     webView.setNeedsLayout()
     webView.layoutIfNeeded()
+    
+    Task {
+      do {
+        let screen: NoCodes.Screen
+        if let screenId = screenId {
+          screen = try await noCodesService.loadScreen(with: screenId)
+        } else if let contextKey = contextKey {
+          screen = try await noCodesService.loadScreen(withContextKey: contextKey)
+        } else {
+          logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
+          throw QonversionError(type: .screenLoadingFailed, message: "No screen id or context key provided")
+        }
+
+        delegate.noCodesHasShownScreen(id: screen.id)
+        
+        webView.loadHTMLString(screen.html, baseURL: nil)
+      } catch {
+        delegate.noCodesFailedToLoadScreen()
+        logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
+      }
+    }
   }
   
   override func viewDidLayoutSubviews() {
@@ -108,6 +135,16 @@ final class NoCodesViewController: UIViewController {
     close(action: nil)
   }
   
+  func addSkeleton() {
+    view.addSubview(skeletonView)
+    skeletonView.startAnimation()
+  }
+  
+  func removeSkeleton() {
+    skeletonView.removeFromSuperview()
+    skeletonView.stopAnimation()
+  }
+  
 }
 
 extension NoCodesViewController: WKScriptMessageHandler {
@@ -116,6 +153,10 @@ extension NoCodesViewController: WKScriptMessageHandler {
     guard let body = message.body as? [String: Any] else { return }
     
     let action: NoCodes.Action = noCodesMapper.map(rawAction: body)
+    
+    if action.type == .showScreen {
+      return removeSkeleton()
+    }
     
     if action.type != .loadProducts {
       delegate.noCodesStartsExecuting(action: action)
@@ -187,7 +228,7 @@ extension NoCodesViewController {
     guard let urlString: String = urlAction.parameters?[Constants.url.rawValue] as? String,
           let url = URL(string: urlString) else {
       logger.error(LoggerInfoMessages.urlHandlingFailed.rawValue)
-      return delegate.noCodesFailedExecuting(action: urlAction, error: nil)
+      return delegate.noCodesFailedToExecute(action: urlAction, error: nil)
     }
     
     let safariVC = SFSafariViewController(url: url)
@@ -199,13 +240,13 @@ extension NoCodesViewController {
     guard let deepLinkString: String = deepLinkAction.parameters?[Constants.deeplink.rawValue] as? String,
           let url = URL(string: deepLinkString) else {
       logger.error(LoggerInfoMessages.deeplingHandlingFailed.rawValue)
-      return delegate.noCodesFailedExecuting(action: deepLinkAction, error: nil)
+      return delegate.noCodesFailedToExecute(action: deepLinkAction, error: nil)
     }
     
     if UIApplication.shared.canOpenURL(url) {
       UIApplication.shared.open(url)
     } else {
-      delegate.noCodesFailedExecuting(action: deepLinkAction, error: nil)
+      delegate.noCodesFailedToExecute(action: deepLinkAction, error: nil)
       logger.error(LoggerInfoMessages.deeplingHandlingFailed.rawValue)
       close(action: deepLinkAction)
     }
@@ -222,7 +263,7 @@ extension NoCodesViewController {
       } catch {
         logger.error(error.localizedDescription)
         activityIndicator.stopAnimating()
-        delegate.noCodesFailedExecuting(action: purchaseAction, error: error)
+        delegate.noCodesFailedToExecute(action: purchaseAction, error: error)
         showAlert(title: Constants.errorTitle.rawValue, message: error.localizedDescription)
       }
     }
@@ -238,7 +279,7 @@ extension NoCodesViewController {
       } catch {
         logger.error(error.localizedDescription)
         activityIndicator.stopAnimating()
-        delegate.noCodesFailedExecuting(action: restoreAction, error: error)
+        delegate.noCodesFailedToExecute(action: restoreAction, error: error)
         showAlert(title: Constants.errorTitle.rawValue, message: error.localizedDescription)
       }
     }
@@ -247,21 +288,9 @@ extension NoCodesViewController {
   private func handle(navigationAction: NoCodes.Action) {
     guard let screenId: String = navigationAction.parameters?[Constants.screenId.rawValue] as? String else { return }
     
-    activityIndicator.startAnimating()
-    Task {
-      do {
-        let screen: NoCodes.Screen = try await noCodesService.loadScreen(with: screenId)
-        activityIndicator.stopAnimating()
-        let viewController = viewsAssembly.viewController(with: screen, delegate: delegate)
-        navigationController?.pushViewController(viewController, animated: true)
-        delegate.noCodesFinishedExecuting(action: navigationAction)
-      } catch {
-        logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
-        activityIndicator.stopAnimating()
-        delegate.noCodesFailedExecuting(action: navigationAction, error: error)
-        showAlert(title: Constants.errorTitle.rawValue, message: error.localizedDescription)
-      }
-    }
+    let viewController = viewsAssembly.viewController(with: screenId, delegate: delegate)
+    navigationController?.pushViewController(viewController, animated: true)
+    delegate.noCodesFinishedExecuting(action: navigationAction)
   }
   
   private func finishAndClose(action: NoCodes.Action) {

@@ -39,15 +39,27 @@ final class NoCodesFlowCoordinator {
   }
   
   @MainActor
-  func showNoCode(with id: String) async throws {
-    let screen: NoCodes.Screen = try await noCodesService.loadScreen(with: id)
-    
-    let viewController: NoCodesViewController = viewsAssembly.viewController(with: screen, delegate: self)
+  func showNoCode(with id: String) {
+    let viewController: NoCodesViewController = viewsAssembly.viewController(with: id, delegate: self)
     currentVC = viewController
     
-    guard let presentationViewController: UIViewController = delegate?.controllerForNavigation() ?? topLevelViewController() else { return }
-    
     let presentationConfiguration: NoCodes.PresentationConfiguration = screenCustomizationDelegate?.presentationConfigurationForScreen(id: id) ?? NoCodes.PresentationConfiguration.defaultConfiguration()
+    
+    showNoCode(viewController, presentationConfiguration)
+  }
+  
+  @MainActor
+  func showNoCode(withContextKey contextKey: String) {
+    let viewController: NoCodesViewController = viewsAssembly.viewController(withContextKey: contextKey, delegate: self)
+    currentVC = viewController
+    
+    let presentationConfiguration: NoCodes.PresentationConfiguration = screenCustomizationDelegate?.presentationConfigurationForScreen(contextKey: contextKey) ?? NoCodes.PresentationConfiguration.defaultConfiguration()
+    
+    showNoCode(viewController, presentationConfiguration)
+  }
+  
+  private func showNoCode(_ viewController: NoCodesViewController, _ presentationConfiguration: NoCodes.PresentationConfiguration) {
+    guard let presentationViewController: UIViewController = delegate?.controllerForNavigation() ?? topLevelViewController() else { return }
     
     if presentationConfiguration.presentationStyle == .push {
       presentationViewController.navigationController?.pushViewController(viewController, animated: presentationConfiguration.animated)
@@ -81,16 +93,16 @@ final class NoCodesFlowCoordinator {
 
 extension NoCodesFlowCoordinator: NoCodesViewControllerDelegate {
   
-  func noCodesShownScreen(id: String) {
-    delegate?.noCodesShownScreen(id: id)
+  func noCodesHasShownScreen(id: String) {
+    delegate?.noCodesHasShownScreen(id: id)
   }
   
   func noCodesStartsExecuting(action: NoCodes.Action) {
     delegate?.noCodesStartsExecuting(action: action)
   }
   
-  func noCodesFailedExecuting(action: NoCodes.Action, error: Error?) {
-    delegate?.noCodesFailedExecuting(action: action, error: error)
+  func noCodesFailedToExecute(action: NoCodes.Action, error: Error?) {
+    delegate?.noCodesFailedToExecute(action: action, error: error)
   }
   
   func noCodesFinishedExecuting(action: NoCodes.Action) {
@@ -99,6 +111,10 @@ extension NoCodesFlowCoordinator: NoCodesViewControllerDelegate {
   
   func noCodesFinished() {
     delegate?.noCodesFinished()
+  }
+  
+  func noCodesFailedToLoadScreen() {
+    delegate?.noCodesFailedToLoadScreen()
   }
   
 }

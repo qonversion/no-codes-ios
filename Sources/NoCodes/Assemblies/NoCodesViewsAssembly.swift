@@ -18,8 +18,12 @@ final class ViewsAssembly {
     self.servicesAssembly = servicesAssembly
   }
   
-  func viewController(with screen: NoCodes.Screen, delegate: NoCodesViewControllerDelegate) -> NoCodesViewController {
-    return NoCodesViewController(screen: screen, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
+  func viewController(with screenId: String, delegate: NoCodesViewControllerDelegate) -> NoCodesViewController {
+    return NoCodesViewController(screenId: screenId, contextKey: nil, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
+  }
+  
+  func viewController(withContextKey contextKey: String, delegate: NoCodesViewControllerDelegate) -> NoCodesViewController {
+    return NoCodesViewController(screenId: nil, contextKey: contextKey, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
   }
   
 }

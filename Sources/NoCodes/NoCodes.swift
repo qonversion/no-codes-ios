@@ -20,8 +20,8 @@ public final class NoCodes {
   
   /// Use this function to initialize the NoCodes SDK.
   /// - Parameters:
-  ///   - configuration: Data for the SDK configuration.
-  /// - Returns: instance of the SDK.
+  ///   - configuration: ``NoCodes/NoCodes/Configuration`` data for the SDK configuration.
+  /// - Returns: ``NoCodes/NoCodes`` instance of the SDK.
   @discardableResult
   public static func initialize(with configuration: Configuration) -> NoCodes {
     let assembly: NoCodesAssembly = NoCodesAssembly(configuration: configuration)
@@ -32,27 +32,36 @@ public final class NoCodes {
   
   /// se this function to set the delegate that will report what is happening inside NoCodes, what actions are being executed/failed, and so on.
   /// - Parameters:
-  ///   - delegate: delegate object.
+  ///   - delegate: ``NoCodes/NoCodes/Delegate`` object.
   public func set(delegate: NoCodes.Delegate) {
     flowCoordinator?.set(delegate: delegate)
   }
   
   /// Use this function to set the screen customization delegate.
   /// - Parameters:
-  ///   - delegate: screen customization delegate object.
+  ///   - delegate: screen customization ``NoCodes/NoCodes/ScreenCustomizationDelegate`` object.
   public func set(screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate) {
     flowCoordinator?.set(screenCustomizationDelegate: screenCustomizationDelegate)
   }
   
   /// Use this function to display the screen.
   /// - Parameters:
-  ///   - id: identifier of the screen.
+  ///   - id: the context key of the screen.
   @MainActor
-  public func showNoCode(with id: String) async throws {
-    try await flowCoordinator?.showNoCode(with: id)
+  public func showNoCode(withContextKey contextKey: String) {
+    flowCoordinator?.showNoCode(withContextKey: contextKey)
   }
   
-  /// Use this function to close all NoCode screens.
+  /// Use this function to display the screen.
+  /// - Parameters:
+  ///   - id: identifier of the screen.
+  @available(*, deprecated, message: "Use showNoCode(withContextKey:) instead")
+  @MainActor
+  public func showNoCode(with id: String) {
+    flowCoordinator?.showNoCode(with: id)
+  }
+  
+  /// Use this function to close all ``NoCodes/NoCodes`` screens.
   public func close() {
     flowCoordinator?.close()
   }
