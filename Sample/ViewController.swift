@@ -33,9 +33,11 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    let configuration = NoCodes.Configuration(projectKey: projectKey)
+    NoCodes.initialize(with: configuration)
+    NoCodes.shared.set(screenCustomizationDelegate: self)
+
     navigationController?.isNavigationBarHidden = true
-    
-    Qonversion.Automations.shared().setDelegate(self)
     
     subscriptionTitleLabel.text = ""
     mainProductSubscriptionButton.layer.cornerRadius = 20.0
@@ -143,9 +145,6 @@ class ViewController: UIViewController {
   }
 
   @IBAction func didTapShowPaywallButton(_ sender: Any) {
-    let configuration = NoCodes.Configuration(projectKey: projectKey)
-    NoCodes.initialize(with: configuration)
-    NoCodes.shared.set(screenCustomizationDelegate: self)
     NoCodes.shared.showNoCode(withContextKey: screenContextKey)
   }
   
@@ -249,12 +248,6 @@ extension Qonversion.Product {
     @unknown default:
       return ""
     }
-  }
-}
-
-extension ViewController: Qonversion.AutomationsDelegate {
-  func controllerForNavigation() -> UIViewController {
-    return self
   }
 }
 

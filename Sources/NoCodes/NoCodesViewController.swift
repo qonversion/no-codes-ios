@@ -77,7 +77,7 @@ final class NoCodesViewController: UIViewController {
     let userContentController = WKUserContentController()
     userContentController.add(self, name: "noCodesMessageHandler")
     let configuration = WKWebViewConfiguration()
-    configuration.userContentController = userContentController;
+    configuration.userContentController = userContentController
     
     configuration.allowsInlineMediaPlayback = true
     configuration.allowsAirPlayForMediaPlayback = true
@@ -104,13 +104,14 @@ final class NoCodesViewController: UIViewController {
     
     Task {
       do {
-        let screen: NoCodes.Screen;
+        let screen: NoCodes.Screen
         if let screenId = screenId {
           screen = try await noCodesService.loadScreen(with: screenId)
         } else if let contextKey = contextKey {
           screen = try await noCodesService.loadScreen(withContextKey: contextKey)
         } else {
-          throw NSError(domain: "no_screen_id_or_context_key", code: 0)
+          logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
+          throw QonversionError(type: .screenLoadingFailed, message: "No screen id or context key provided")
         }
 
         delegate.noCodesHasShownScreen(id: screen.id)
