@@ -15,20 +15,28 @@ extension NoCodes {
     let html: String
     
     private enum CodingKeys: String, CodingKey {
+      // After adding any keys here, duplicate them in the ResponseCodingKeys
       case id
       case body
     }
     
     private enum ResponseCodingKeys: String, CodingKey {
+      // Getting screen by id works via legacy API. By context key - via the new, they have different response structure,
+      // so the keys are duplicated to support both.
       case data
+      case id
+      case body
     }
     
     public init(from decoder: Decoder) throws {
       let container = try decoder.container(keyedBy: ResponseCodingKeys.self)
-      let screenContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: ResponseCodingKeys.data)
-      
-      id = try screenContainer.decode(String.self, forKey: .id)
-      html = try screenContainer.decode(String.self, forKey: .body)
+      if let screenContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: ResponseCodingKeys.data) {
+        id = try screenContainer.decode(String.self, forKey: .id)
+        html = try screenContainer.decode(String.self, forKey: .body)
+      } else {
+        id = try container.decode(String.self, forKey: .id)
+        html = try container.decode(String.self, forKey: .body)
+      }
     }
   }
   

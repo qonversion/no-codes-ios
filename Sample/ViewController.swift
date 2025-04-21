@@ -14,6 +14,8 @@ import NoCodes
 
 class ViewController: UIViewController {
   
+  let projectKey = "PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2"
+  let screenContextKey = "your_screen_context_key"
   let firstPurchaseButtonProduct = "weekly"
   let secondPurchaseButtonProduct = "in_app"
   
@@ -31,10 +33,11 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    let configuration = NoCodes.Configuration(projectKey: projectKey)
+    NoCodes.initialize(with: configuration)
+    NoCodes.shared.set(screenCustomizationDelegate: self)
+
     navigationController?.isNavigationBarHidden = true
-    
-    Qonversion.Automations.shared().setDelegate(self)
-    Qonversion.Automations.shared().setScreenCustomizationDelegate(self)
     
     subscriptionTitleLabel.text = ""
     mainProductSubscriptionButton.layer.cornerRadius = 20.0
@@ -140,11 +143,9 @@ class ViewController: UIViewController {
       }
     }
   }
-  
+
   @IBAction func didTapShowPaywallButton(_ sender: Any) {
-    let configuration = NoCodes.Configuration(projectKey: "your_project_key")
-    NoCodes.initialize(with: configuration)
-    NoCodes.shared.showNoCode(with: "screen_id")
+    NoCodes.shared.showNoCode(withContextKey: screenContextKey)
   }
   
   @IBAction func didTapInAppPurchaseButton(_ sender: Any) {
@@ -250,14 +251,8 @@ extension Qonversion.Product {
   }
 }
 
-extension ViewController: Qonversion.AutomationsDelegate {
-  func controllerForNavigation() -> UIViewController {
-    return self
-  }
-}
-
-extension ViewController: Qonversion.ScreenCustomizationDelegate {
-  func presentationConfigurationForScreen(_ screenId: String) -> Qonversion.ScreenPresentationConfiguration {
+extension ViewController: NoCodes.ScreenCustomizationDelegate {
+  private func presentationConfigurationForScreen(contextKey: String) -> Qonversion.ScreenPresentationConfiguration {
     return Qonversion.ScreenPresentationConfiguration(presentationStyle: .push, animated: true)
   }
 }

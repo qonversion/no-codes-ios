@@ -42,7 +42,8 @@ final class NoCodesViewController: UIViewController {
   
   private var webView: WKWebView!
   private var activityIndicator: UIActivityIndicatorView!
-  private var screenId: String!
+  private var screenId: String?
+  private var contextKey: String?
   private var screen: NoCodes.Screen?
   private var noCodesService: NoCodesServiceInterface!
   private var noCodesMapper: NoCodesMapperInterface!
@@ -51,8 +52,9 @@ final class NoCodesViewController: UIViewController {
   private var logger: LoggerWrapper!
   private var skeletonView: SkeletonView!
   
-  init(screenId: String, delegate: NoCodesViewControllerDelegate, noCodesMapper: NoCodesMapperInterface, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper) {
+  init(screenId: String?, contextKey: String?, delegate: NoCodesViewControllerDelegate, noCodesMapper: NoCodesMapperInterface, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper) {
     self.screenId = screenId
+    self.contextKey = contextKey
     self.noCodesMapper = noCodesMapper
     self.noCodesService = noCodesService
     self.viewsAssembly = viewsAssembly
@@ -75,7 +77,7 @@ final class NoCodesViewController: UIViewController {
     let userContentController = WKUserContentController()
     userContentController.add(self, name: "noCodesMessageHandler")
     let configuration = WKWebViewConfiguration()
-    configuration.userContentController = userContentController;
+    configuration.userContentController = userContentController
     
     configuration.allowsInlineMediaPlayback = true
     configuration.allowsAirPlayForMediaPlayback = true
@@ -102,8 +104,16 @@ final class NoCodesViewController: UIViewController {
     
     Task {
       do {
-        let screen: NoCodes.Screen = try await noCodesService.loadScreen(with: screenId)
-        
+        let screen: NoCodes.Screen
+        if let screenId = screenId {
+          screen = try await noCodesService.loadScreen(with: screenId)
+        } else if let contextKey = contextKey {
+          screen = try await noCodesService.loadScreen(withContextKey: contextKey)
+        } else {
+          logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
+          throw QonversionError(type: .screenLoadingFailed, message: "No screen id or context key provided")
+        }
+
         delegate.noCodesHasShownScreen(id: screen.id)
         
         webView.loadHTMLString(screen.html, baseURL: nil)

@@ -19,7 +19,11 @@ final class ViewsAssembly {
   }
   
   func viewController(with screenId: String, delegate: NoCodesViewControllerDelegate) -> NoCodesViewController {
-    return NoCodesViewController(screenId: screenId, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
+    return NoCodesViewController(screenId: screenId, contextKey: nil, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
+  }
+  
+  func viewController(withContextKey contextKey: String, delegate: NoCodesViewControllerDelegate) -> NoCodesViewController {
+    return NoCodesViewController(screenId: nil, contextKey: contextKey, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
   }
   
 }
