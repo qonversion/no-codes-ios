@@ -26,7 +26,7 @@ extension NoCodes {
     /// - Parameters:
     ///   - projectKey: Your project key from Qonversion Dashboard to setup the SDK
     ///   - delegate: delegate object.
-    ///   - screenCustomizationDelegate: screen customization delegate object.
+    ///   - screenCustomizationDelegate: ``NoCodes/NoCodes/ScreenCustomizationDelegate`` screen customization delegate object.
     public init(projectKey: String, delegate: NoCodes.Delegate? = nil, screenCustomizationDelegate: NoCodes.ScreenCustomizationDelegate? = nil) {
       self.projectKey = projectKey
       self.delegate = delegate

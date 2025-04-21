@@ -12,4 +12,6 @@ protocol NoCodesServiceInterface {
   
   func loadScreen(with id: String) async throws -> NoCodes.Screen
   
+  func loadScreen(withContextKey contextKey: String) async throws -> NoCodes.Screen
+  
 }
