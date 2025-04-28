@@ -114,6 +114,8 @@ final class NoCodesViewController: UIViewController {
           throw QonversionError(type: .screenLoadingFailed, message: "No screen id or context key provided")
         }
 
+        self.screenId = screen.id
+        self.contextKey = screen.contextKey
         delegate.noCodesHasShownScreen(id: screen.id)
         
         webView.loadHTMLString(screen.html, baseURL: nil)
@@ -257,7 +259,14 @@ extension NoCodesViewController {
     activityIndicator.startAnimating()
     Task {
       do {
-        try await Qonversion.shared().purchase(productId)
+        let products = try await Qonversion.shared().products()
+        guard let product = products[productId] else {
+          throw QonversionError(type: .productNotFound, message: "Product with id \(productId) not found")
+        }
+
+        let options = Qonversion.PurchaseOptions(screenUid: screenId)
+
+        try await Qonversion.shared().purchaseProduct(product, options: options)
         activityIndicator.stopAnimating()
         finishAndClose(action: purchaseAction)
       } catch {

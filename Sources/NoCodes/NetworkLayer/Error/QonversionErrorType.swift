@@ -9,6 +9,7 @@ enum QonversionErrorType {
   case unknown
   case `internal`
   case sdkInitializationError
+  case productNotFound
   case invalidRequest
   case invalidResponse
   case authorizationFailed

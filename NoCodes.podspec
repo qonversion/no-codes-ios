@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.requires_arc              = true
   s.resource_bundles          = {'NoCodes' => ['Sources/PrivacyInfo.xcprivacy']}
   s.source_files              = 'Sources/NoCodes/**/*.{h,m,swift}'
-  s.dependency "Qonversion", "5.13.0"
+  s.dependency "Qonversion", "5.13.3"
 end
