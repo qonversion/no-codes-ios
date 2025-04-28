@@ -13,11 +13,13 @@ extension NoCodes {
   struct Screen: Decodable {
     let id: String
     let html: String
+    let contextKey: String
     
     private enum CodingKeys: String, CodingKey {
       // After adding any keys here, duplicate them in the ResponseCodingKeys
       case id
       case body
+      case context_key
     }
     
     private enum ResponseCodingKeys: String, CodingKey {
@@ -26,6 +28,7 @@ extension NoCodes {
       case data
       case id
       case body
+      case context_key
     }
     
     public init(from decoder: Decoder) throws {
@@ -33,9 +36,11 @@ extension NoCodes {
       if let screenContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: ResponseCodingKeys.data) {
         id = try screenContainer.decode(String.self, forKey: .id)
         html = try screenContainer.decode(String.self, forKey: .body)
+        contextKey = try screenContainer.decode(String.self, forKey: .context_key)
       } else {
         id = try container.decode(String.self, forKey: .id)
         html = try container.decode(String.self, forKey: .body)
+        contextKey = try container.decode(String.self, forKey: .context_key)
       }
     }
   }
