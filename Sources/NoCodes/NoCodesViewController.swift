@@ -264,7 +264,8 @@ extension NoCodesViewController {
           throw QonversionError(type: .productNotFound, message: "Product with id \(productId) not found")
         }
 
-        let options = Qonversion.PurchaseOptions(screenUid: screenId)
+        let options = Qonversion.PurchaseOptions()
+        options.screenUid = screenId
 
         try await Qonversion.shared().purchaseProduct(product, options: options)
         activityIndicator.stopAnimating()
