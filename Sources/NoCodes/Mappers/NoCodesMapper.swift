@@ -42,9 +42,9 @@ final class NoCodesMapper: NoCodesMapperInterface {
   
   func map(introPricePaymentType: SKProductDiscount.PaymentMode) -> String {
     switch introPricePaymentType {
-    case .freeTrial: return "freeTrial"
-    case .payUpFront: return "payUpFront"
-    case .payAsYouGo: return "payAsYouGo"
+    case .freeTrial: return "trial"
+    case .payUpFront: return "pay_up_front"
+    case .payAsYouGo: return "pay_as_you_go"
     @unknown default: return ""
     }
   }
@@ -66,25 +66,25 @@ final class NoCodesMapper: NoCodesMapperInterface {
       var productInfo: [String: Any] = [:]
       productInfo["id"] = product.qonversionID
       productInfo["store_id"] = product.storeID
-      
+
       if let skProduct: SKProduct = product.skProduct {
         productInfo["title"] = skProduct.localizedTitle
         productInfo["price"] = skProduct.price
-        productInfo["currencySymbol"] = skProduct.priceLocale.currencySymbol
-        productInfo["currency"] = skProduct.prettyCurrency
+        productInfo["currency_symbol"] = skProduct.priceLocale.currencySymbol
+        productInfo["currency_сode"] = skProduct.prettyCurrency
         
         if let subscriptionPeriod: SKProductSubscriptionPeriod = skProduct.subscriptionPeriod {
-          productInfo["duration"] = map(periodUnit: subscriptionPeriod.unit)
-          productInfo["numberOfUnits"] = subscriptionPeriod.numberOfUnits
+          productInfo["period_unit"] = map(periodUnit: subscriptionPeriod.unit)
+          productInfo["period_unit_count"] = subscriptionPeriod.numberOfUnits
         }
         
         if let introPrice: SKProductDiscount = skProduct.introductoryPrice {
-          productInfo["introPrice"] = introPrice.price
-          productInfo["introPriceType"] = map(introPriceType: introPrice.type)
-          productInfo["introPricePaymentMode"] = map(introPricePaymentType: introPrice.paymentMode)
-          productInfo["introPeriodUnit"] = map(periodUnit: introPrice.subscriptionPeriod.unit)
-          productInfo["introPeriodNumberOfUnits"] = introPrice.subscriptionPeriod.numberOfUnits
-          productInfo["introNumberOfPeriods"] = introPrice.numberOfPeriods
+          productInfo["intro_price"] = introPrice.price
+          productInfo["intro_price_type"] = map(introPriceType: introPrice.type)
+          productInfo["payment_mode"] = map(introPricePaymentType: introPrice.paymentMode)
+          productInfo["intro_period_unit"] = map(periodUnit: introPrice.subscriptionPeriod.unit)
+          productInfo["intro_period_unit_count"] = introPrice.subscriptionPeriod.numberOfUnits
+          productInfo["intro_number_of_periods"] = introPrice.numberOfPeriods
         }
       }
       
