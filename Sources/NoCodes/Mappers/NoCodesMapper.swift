@@ -71,7 +71,7 @@ final class NoCodesMapper: NoCodesMapperInterface {
         productInfo["title"] = skProduct.localizedTitle
         productInfo["price"] = skProduct.price
         productInfo["currency_symbol"] = skProduct.priceLocale.currencySymbol
-        productInfo["currency_сode"] = skProduct.prettyCurrency
+        productInfo["currency_code"] = skProduct.prettyCurrency
         
         if let subscriptionPeriod: SKProductSubscriptionPeriod = skProduct.subscriptionPeriod {
           productInfo["period_unit"] = map(periodUnit: subscriptionPeriod.unit)
