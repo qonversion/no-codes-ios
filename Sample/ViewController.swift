@@ -252,7 +252,7 @@ extension Qonversion.Product {
 }
 
 extension ViewController: NoCodes.ScreenCustomizationDelegate {
-  private func presentationConfigurationForScreen(contextKey: String) -> Qonversion.ScreenPresentationConfiguration {
-    return Qonversion.ScreenPresentationConfiguration(presentationStyle: .push, animated: true)
+  func presentationConfigurationForScreen(contextKey: String) -> NoCodes.PresentationConfiguration {
+    return NoCodes.PresentationConfiguration(animated: true, presentationStyle: .fullScreen, statusBarHidden: true)
   }
 }
