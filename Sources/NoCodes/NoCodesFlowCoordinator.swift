@@ -40,20 +40,20 @@ final class NoCodesFlowCoordinator {
   
   @MainActor
   func showNoCode(with id: String) {
-    let viewController: NoCodesViewController = viewsAssembly.viewController(with: id, delegate: self)
-    currentVC = viewController
-    
     let presentationConfiguration: NoCodes.PresentationConfiguration = screenCustomizationDelegate?.presentationConfigurationForScreen(id: id) ?? NoCodes.PresentationConfiguration.defaultConfiguration()
+    
+    let viewController: NoCodesViewController = viewsAssembly.viewController(with: id, delegate: self, presentationConfiguration: presentationConfiguration)
+    currentVC = viewController
     
     showNoCode(viewController, presentationConfiguration)
   }
   
   @MainActor
   func showNoCode(withContextKey contextKey: String) {
-    let viewController: NoCodesViewController = viewsAssembly.viewController(withContextKey: contextKey, delegate: self)
-    currentVC = viewController
-    
     let presentationConfiguration: NoCodes.PresentationConfiguration = screenCustomizationDelegate?.presentationConfigurationForScreen(contextKey: contextKey) ?? NoCodes.PresentationConfiguration.defaultConfiguration()
+    
+    let viewController: NoCodesViewController = viewsAssembly.viewController(withContextKey: contextKey, delegate: self, presentationConfiguration: presentationConfiguration)
+    currentVC = viewController
     
     showNoCode(viewController, presentationConfiguration)
   }

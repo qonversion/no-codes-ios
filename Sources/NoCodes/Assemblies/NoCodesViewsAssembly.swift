@@ -18,12 +18,12 @@ final class ViewsAssembly {
     self.servicesAssembly = servicesAssembly
   }
   
-  func viewController(with screenId: String, delegate: NoCodesViewControllerDelegate) -> NoCodesViewController {
-    return NoCodesViewController(screenId: screenId, contextKey: nil, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
+  func viewController(with screenId: String, delegate: NoCodesViewControllerDelegate, presentationConfiguration: NoCodes.PresentationConfiguration) -> NoCodesViewController {
+      return NoCodesViewController(screenId: screenId, contextKey: nil, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper(), presentationConfiguration: presentationConfiguration)
   }
   
-  func viewController(withContextKey contextKey: String, delegate: NoCodesViewControllerDelegate) -> NoCodesViewController {
-    return NoCodesViewController(screenId: nil, contextKey: contextKey, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper())
+  func viewController(withContextKey contextKey: String, delegate: NoCodesViewControllerDelegate, presentationConfiguration: NoCodes.PresentationConfiguration) -> NoCodesViewController {
+      return NoCodesViewController(screenId: nil, contextKey: contextKey, delegate: delegate, noCodesMapper: miscAssembly.noCodesMapper(), noCodesService: servicesAssembly.noCodesService(), viewsAssembly: self, logger: miscAssembly.loggerWrapper(), presentationConfiguration: presentationConfiguration)
   }
   
 }

@@ -32,12 +32,13 @@ extension NoCodes {
     }
     
     public init(from decoder: Decoder) throws {
-      let container = try decoder.container(keyedBy: ResponseCodingKeys.self)
-      if let screenContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: ResponseCodingKeys.data) {
+      if var arrayContainer = try? decoder.unkeyedContainer(),
+         let screenContainer = try? arrayContainer.nestedContainer(keyedBy: CodingKeys.self) {
         id = try screenContainer.decode(String.self, forKey: .id)
         html = try screenContainer.decode(String.self, forKey: .body)
         contextKey = try screenContainer.decode(String.self, forKey: .context_key)
       } else {
+        let container = try decoder.container(keyedBy: ResponseCodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         html = try container.decode(String.self, forKey: .body)
         contextKey = try container.decode(String.self, forKey: .context_key)
