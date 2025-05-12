@@ -48,8 +48,8 @@ public final class NoCodes {
   /// - Parameters:
   ///   - id: the context key of the screen.
   @MainActor
-  public func showNoCode(withContextKey contextKey: String) {
-    flowCoordinator?.showNoCode(withContextKey: contextKey)
+  public func showScreen(withContextKey contextKey: String) {
+    flowCoordinator?.showScreen(withContextKey: contextKey)
   }
   
   /// Use this function to display the screen.
@@ -57,8 +57,8 @@ public final class NoCodes {
   ///   - id: identifier of the screen.
   @available(*, deprecated, message: "Use showNoCode(withContextKey:) instead")
   @MainActor
-  public func showNoCode(with id: String) {
-    flowCoordinator?.showNoCode(with: id)
+  public func showScreen(with id: String) {
+    flowCoordinator?.showScreen(with: id)
   }
   
   /// Use this function to close all ``NoCodes/NoCodes`` screens.
