@@ -182,7 +182,7 @@ class ViewController: UIViewController {
     }
     
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-    let showAction = UIAlertAction(title: "Show NoCode", style: .default) { [weak self] _ in
+    let showAction = UIAlertAction(title: "Show No-Code Screen", style: .default) { [weak self] _ in
       guard let contextKey = alertController.textFields?.first?.text, !contextKey.isEmpty else { return }
       self?.lastEnteredContextKey = contextKey
       NoCodes.shared.showNoCode(withContextKey: contextKey)
