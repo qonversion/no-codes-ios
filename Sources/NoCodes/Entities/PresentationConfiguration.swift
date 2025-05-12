@@ -19,10 +19,12 @@ extension NoCodes {
   public struct PresentationConfiguration {
     let animated: Bool
     let presentationStyle: NoCodes.PresentationStyle
+    let statusBarHidden: Bool
     
-    public init(animated: Bool, presentationStyle: NoCodes.PresentationStyle) {
+    public init(animated: Bool, presentationStyle: NoCodes.PresentationStyle, statusBarHidden: Bool = false) {
       self.animated = animated
       self.presentationStyle = presentationStyle
+      self.statusBarHidden = statusBarHidden
     }
     
     public static func defaultConfiguration() -> PresentationConfiguration {

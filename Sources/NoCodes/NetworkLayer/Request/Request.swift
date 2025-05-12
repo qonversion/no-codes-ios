@@ -11,8 +11,8 @@ typealias RequestBodyDict = [String: AnyHashable]
 typealias RequestBodyArray = [AnyHashable]
 
 enum Request : Hashable {
-    case getScreen(id: String, endpoint: String = "v2/screens/", type: RequestType = .get)
-    case getScreenByContextKey(contextKey: String, endpoint: String = "v3/screens", type: RequestType = .get)
+    case getScreen(id: String, endpoint: String = "v3/screens/", type: RequestType = .get)
+    case getScreenByContextKey(contextKey: String, endpoint: String = "v3/contexts/%@/screens", type: RequestType = .get)
     
     func convertToURLRequest(_ baseUrl: String) -> URLRequest? {
         func defaultRequest(urlString: String, body: Any?, type: RequestType) -> URLRequest? {
@@ -30,7 +30,8 @@ enum Request : Hashable {
         case let .getScreen(id, endpoint, type):
             return defaultRequest(urlString: endpoint + id, body: nil, type: type)
         case let .getScreenByContextKey(contextKey, endpoint, type):
-            return defaultRequest(urlString: endpoint + "?context_key=" + contextKey, body: nil, type: type)
+            let urlString = String(format: endpoint, arguments: [contextKey])
+            return defaultRequest(urlString: urlString, body: nil, type: type)
         }
     }
 
