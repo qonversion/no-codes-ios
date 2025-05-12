@@ -15,9 +15,18 @@ import NoCodes
 class ViewController: UIViewController {
   
   let projectKey = "PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2"
-  let screenContextKey = "your_screen_context_key"
-  let firstPurchaseButtonProduct = "weekly"
+  let screenContextKey = "kamo_test"
+  let firstPurchaseButtonProduct = "annual"
   let secondPurchaseButtonProduct = "in_app"
+  
+  private var lastEnteredContextKey: String? {
+    get {
+      UserDefaults.standard.string(forKey: "lastEnteredContextKey")
+    }
+    set {
+      UserDefaults.standard.set(newValue, forKey: "lastEnteredContextKey")
+    }
+  }
   
   @IBOutlet weak var mainProductSubscriptionButton: UIButton!
   @IBOutlet weak var inAppPurchaseButton: UIButton!
@@ -26,6 +35,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var subscriptionTitleLabel: UILabel!
   @IBOutlet weak var checkActivePermissionsButton: UIButton!
   @IBOutlet weak var logoutButton: UIButton!
+  @IBOutlet weak var presentPaywallButton: UIButton!
   
   var permissions: [String: Qonversion.Entitlement] = [:]
   var products: [String: Qonversion.Product] = [:]
@@ -36,6 +46,7 @@ class ViewController: UIViewController {
     let configuration = NoCodes.Configuration(projectKey: projectKey)
     NoCodes.initialize(with: configuration)
     NoCodes.shared.set(screenCustomizationDelegate: self)
+    NoCodes.shared.set(delegate: self)
 
     navigationController?.isNavigationBarHidden = true
     
@@ -50,6 +61,8 @@ class ViewController: UIViewController {
     logoutButton.layer.borderColor = mainProductSubscriptionButton.backgroundColor?.cgColor
     
     offeringsButton.layer.cornerRadius = 20.0
+    
+    updatePaywallButtonAppearance()
     
     Qonversion.shared().checkEntitlements { [weak self] (permissions, error) in
       guard let self = self else { return }
@@ -75,6 +88,20 @@ class ViewController: UIViewController {
     Qonversion.shared().offerings { offerings, error in
       
     }
+  }
+  
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+    
+    if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+      updatePaywallButtonAppearance()
+    }
+  }
+  
+  private func updatePaywallButtonAppearance() {
+    let isDarkMode = traitCollection.userInterfaceStyle == .dark
+    let textColor: UIColor = isDarkMode ? .white : .black
+    presentPaywallButton.setTitleColor(textColor, for: .normal)
   }
   
   func checkProducts() {
@@ -145,7 +172,26 @@ class ViewController: UIViewController {
   }
 
   @IBAction func didTapShowPaywallButton(_ sender: Any) {
-    NoCodes.shared.showNoCode(withContextKey: screenContextKey)
+    let alertController = UIAlertController(title: "Enter context key", message: nil, preferredStyle: .alert)
+    
+    alertController.addTextField { [weak self] textField in
+      textField.placeholder = "Context key"
+      textField.text = self?.lastEnteredContextKey
+      textField.clearButtonMode = .always
+      textField.delegate = self
+    }
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+    let showAction = UIAlertAction(title: "Show NoCode", style: .default) { [weak self] _ in
+      guard let contextKey = alertController.textFields?.first?.text, !contextKey.isEmpty else { return }
+      self?.lastEnteredContextKey = contextKey
+      NoCodes.shared.showNoCode(withContextKey: contextKey)
+    }
+    
+    alertController.addAction(cancelAction)
+    alertController.addAction(showAction)
+    
+    present(alertController, animated: true)
   }
   
   @IBAction func didTapInAppPurchaseButton(_ sender: Any) {
@@ -254,5 +300,23 @@ extension Qonversion.Product {
 extension ViewController: NoCodes.ScreenCustomizationDelegate {
   func presentationConfigurationForScreen(contextKey: String) -> NoCodes.PresentationConfiguration {
     return NoCodes.PresentationConfiguration(animated: true, presentationStyle: .fullScreen, statusBarHidden: true)
+  }
+}
+
+extension ViewController: NoCodes.Delegate {
+  func noCodesFailedToExecute(action: NoCodes.Action, error: (any Error)?) {
+    
+  }
+  
+  func noCodesFailedToLoadScreen() {
+    NoCodes.shared.close()
+  }
+  
+}
+
+extension ViewController: UITextFieldDelegate {
+  func textFieldShouldClear(_ textField: UITextField) -> Bool {
+    lastEnteredContextKey = nil
+    return true
   }
 }

@@ -216,16 +216,24 @@ extension NoCodesViewController {
     Task {
       guard let productIds: [String] = loadProductsAction.parameters?["productIds"] as? [String],
             let products: [String: Qonversion.Product] = try? await Qonversion.shared().products()
-      else { return logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue) }
+      else {
+        logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue)
+        return delegate.noCodesFailedToLoadScreen()
+      }
       
       let filteredProducts: [String: Qonversion.Product] = products.filter { productIds.contains($0.key) }
-      guard !filteredProducts.isEmpty else { return }
+      guard !filteredProducts.isEmpty else {
+        return delegate.noCodesFailedToLoadScreen()
+      }
       
       let productsInfo: [String: Any] = noCodesMapper.map(products: filteredProducts)
       
       guard let data = try? JSONSerialization.data(withJSONObject: productsInfo, options: []),
             let jsString = String(data: data, encoding: .utf8)
-      else { return logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue) }
+      else {
+        logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue)
+        return delegate.noCodesFailedToLoadScreen()
+      }
       await send(event: Constants.setProducts.rawValue, data: jsString)
     }
   }
