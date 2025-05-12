@@ -32,7 +32,7 @@ protocol NoCodesViewControllerDelegate {
   
   func noCodesFinished()
   
-  func noCodesFailedToLoadScreen()
+  func noCodesFailedToLoadScreen(error: Error?)
   
 }
 
@@ -124,7 +124,7 @@ final class NoCodesViewController: UIViewController {
         
         webView.loadHTMLString(screen.html, baseURL: nil)
       } catch {
-        delegate.noCodesFailedToLoadScreen()
+        delegate.noCodesFailedToLoadScreen(error: nil)
         logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
       }
     }
@@ -218,12 +218,12 @@ extension NoCodesViewController {
             let products: [String: Qonversion.Product] = try? await Qonversion.shared().products()
       else {
         logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue)
-        return delegate.noCodesFailedToLoadScreen()
+        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
       }
       
       let filteredProducts: [String: Qonversion.Product] = products.filter { productIds.contains($0.key) }
       guard !filteredProducts.isEmpty else {
-        return delegate.noCodesFailedToLoadScreen()
+        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
       }
       
       let productsInfo: [String: Any] = noCodesMapper.map(products: filteredProducts)
@@ -232,7 +232,7 @@ extension NoCodesViewController {
             let jsString = String(data: data, encoding: .utf8)
       else {
         logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue)
-        return delegate.noCodesFailedToLoadScreen()
+        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
       }
       await send(event: Constants.setProducts.rawValue, data: jsString)
     }

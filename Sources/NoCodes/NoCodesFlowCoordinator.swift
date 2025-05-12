@@ -113,8 +113,8 @@ extension NoCodesFlowCoordinator: NoCodesViewControllerDelegate {
     delegate?.noCodesFinished()
   }
   
-  func noCodesFailedToLoadScreen() {
-    delegate?.noCodesFailedToLoadScreen()
+  func noCodesFailedToLoadScreen(error: Error?) {
+    delegate?.noCodesFailedToLoadScreen(error: error)
   }
   
 }

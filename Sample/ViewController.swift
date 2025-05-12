@@ -185,7 +185,7 @@ class ViewController: UIViewController {
     let showAction = UIAlertAction(title: "Show No-Code Screen", style: .default) { [weak self] _ in
       guard let contextKey = alertController.textFields?.first?.text, !contextKey.isEmpty else { return }
       self?.lastEnteredContextKey = contextKey
-      NoCodes.shared.showNoCode(withContextKey: contextKey)
+      NoCodes.shared.showScreen(withContextKey: contextKey)
     }
     
     alertController.addAction(cancelAction)
@@ -308,7 +308,7 @@ extension ViewController: NoCodes.Delegate {
     
   }
   
-  func noCodesFailedToLoadScreen() {
+  func noCodesFailedToLoadScreen(error: Error?) {
     NoCodes.shared.close()
   }
   
