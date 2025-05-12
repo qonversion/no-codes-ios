@@ -180,6 +180,7 @@
                         <outlet property="logoutButton" destination="GDR-fR-MEn" id="z8K-bR-Ayd"/>
                         <outlet property="mainProductSubscriptionButton" destination="T59-6l-CJ1" id="XWt-wH-fWl"/>
                         <outlet property="offeringsButton" destination="STb-3J-RUB" id="XtT-pU-IDY"/>
+                        <outlet property="presentPaywallButton" destination="VA4-u2-ECB" id="LSr-Vm-iuZ"/>
                         <outlet property="subscriptionTitleLabel" destination="x6n-H3-7BD" id="6Vf-cJ-Q2o"/>
                     </connections>
                 </viewController>
@@ -491,8 +492,7 @@ Please use the sign-in with Google option to test cross-platform subscription ma
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
-

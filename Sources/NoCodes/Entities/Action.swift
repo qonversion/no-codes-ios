@@ -46,10 +46,10 @@ public extension NoCodes {
   /// Action performed in the NoCodes
   struct Action {
     /// Type of the action
-    let type: ActionType
+    public let type: ActionType
     
     // Parameters for the action
-    let parameters: [String: Any]?
+    public let parameters: [String: Any]?
   }
   
 }

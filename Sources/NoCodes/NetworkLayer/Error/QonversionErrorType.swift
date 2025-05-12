@@ -10,6 +10,7 @@ enum QonversionErrorType {
   case `internal`
   case sdkInitializationError
   case productNotFound
+  case productsLoadingFailed
   case invalidRequest
   case invalidResponse
   case authorizationFailed
@@ -25,6 +26,8 @@ enum QonversionErrorType {
       return "SDK is not initialized. Initialize SDK before calling other functions"
     case .screenLoadingFailed:
       return "Failed to load screen."
+    case .productsLoadingFailed:
+      return "Failed to load products."
     default:
       return "Unknown error occurred."
     }

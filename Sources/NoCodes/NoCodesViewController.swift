@@ -18,8 +18,6 @@ enum Constants: String {
   case screenId
   case productId
   case setProducts
-  case cancelActionTitle = "Ok"
-  case errorTitle = "Error"
 }
 
 protocol NoCodesViewControllerDelegate {
@@ -34,7 +32,7 @@ protocol NoCodesViewControllerDelegate {
   
   func noCodesFinished()
   
-  func noCodesFailedToLoadScreen()
+  func noCodesFailedToLoadScreen(error: Error?)
   
 }
 
@@ -51,8 +49,9 @@ final class NoCodesViewController: UIViewController {
   private var delegate: NoCodesViewControllerDelegate!
   private var logger: LoggerWrapper!
   private var skeletonView: SkeletonView!
+  private var presentationConfiguration: NoCodes.PresentationConfiguration!
   
-  init(screenId: String?, contextKey: String?, delegate: NoCodesViewControllerDelegate, noCodesMapper: NoCodesMapperInterface, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper) {
+  init(screenId: String?, contextKey: String?, delegate: NoCodesViewControllerDelegate, noCodesMapper: NoCodesMapperInterface, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper, presentationConfiguration: NoCodes.PresentationConfiguration) {
     self.screenId = screenId
     self.contextKey = contextKey
     self.noCodesMapper = noCodesMapper
@@ -60,6 +59,7 @@ final class NoCodesViewController: UIViewController {
     self.viewsAssembly = viewsAssembly
     self.delegate = delegate
     self.logger = logger
+    self.presentationConfiguration = presentationConfiguration
     
     super.init(nibName: nil, bundle: nil)
     
@@ -71,6 +71,10 @@ final class NoCodesViewController: UIViewController {
     super.init(coder: coder)
   }
   
+  override var prefersStatusBarHidden: Bool {
+    return presentationConfiguration.statusBarHidden
+  }
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -120,7 +124,7 @@ final class NoCodesViewController: UIViewController {
         
         webView.loadHTMLString(screen.html, baseURL: nil)
       } catch {
-        delegate.noCodesFailedToLoadScreen()
+        delegate.noCodesFailedToLoadScreen(error: nil)
         logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
       }
     }
@@ -212,16 +216,24 @@ extension NoCodesViewController {
     Task {
       guard let productIds: [String] = loadProductsAction.parameters?["productIds"] as? [String],
             let products: [String: Qonversion.Product] = try? await Qonversion.shared().products()
-      else { return logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue) }
+      else {
+        logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue)
+        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
+      }
       
       let filteredProducts: [String: Qonversion.Product] = products.filter { productIds.contains($0.key) }
-      guard !filteredProducts.isEmpty else { return }
+      guard !filteredProducts.isEmpty else {
+        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
+      }
       
       let productsInfo: [String: Any] = noCodesMapper.map(products: filteredProducts)
       
       guard let data = try? JSONSerialization.data(withJSONObject: productsInfo, options: []),
             let jsString = String(data: data, encoding: .utf8)
-      else { return logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue) }
+      else {
+        logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue)
+        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
+      }
       await send(event: Constants.setProducts.rawValue, data: jsString)
     }
   }
@@ -274,7 +286,6 @@ extension NoCodesViewController {
         logger.error(error.localizedDescription)
         activityIndicator.stopAnimating()
         delegate.noCodesFailedToExecute(action: purchaseAction, error: error)
-        showAlert(title: Constants.errorTitle.rawValue, message: error.localizedDescription)
       }
     }
   }
@@ -290,7 +301,6 @@ extension NoCodesViewController {
         logger.error(error.localizedDescription)
         activityIndicator.stopAnimating()
         delegate.noCodesFailedToExecute(action: restoreAction, error: error)
-        showAlert(title: Constants.errorTitle.rawValue, message: error.localizedDescription)
       }
     }
   }
@@ -298,7 +308,7 @@ extension NoCodesViewController {
   private func handle(navigationAction: NoCodes.Action) {
     guard let screenId: String = navigationAction.parameters?[Constants.screenId.rawValue] as? String else { return }
     
-    let viewController = viewsAssembly.viewController(with: screenId, delegate: delegate)
+    let viewController = viewsAssembly.viewController(with: screenId, delegate: delegate, presentationConfiguration: presentationConfiguration)
     navigationController?.pushViewController(viewController, animated: true)
     delegate.noCodesFinishedExecuting(action: navigationAction)
   }
@@ -318,14 +328,6 @@ extension NoCodesViewController {
       navigationController?.popToViewController(vcToPop, animated: true)
       delegate.noCodesFinished()
     }
-  }
-  
-  private func showAlert(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
-    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    let action = UIAlertAction(title: Constants.cancelActionTitle.rawValue, style: .cancel, handler: handler)
-    alert.addAction(action)
-    
-    navigationController?.present(alert, animated: true)
   }
   
   private func firstExternalViewController() -> UIViewController? {

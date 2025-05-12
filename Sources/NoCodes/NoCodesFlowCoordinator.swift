@@ -39,26 +39,26 @@ final class NoCodesFlowCoordinator {
   }
   
   @MainActor
-  func showNoCode(with id: String) {
-    let viewController: NoCodesViewController = viewsAssembly.viewController(with: id, delegate: self)
-    currentVC = viewController
-    
+  func showScreen(with id: String) {
     let presentationConfiguration: NoCodes.PresentationConfiguration = screenCustomizationDelegate?.presentationConfigurationForScreen(id: id) ?? NoCodes.PresentationConfiguration.defaultConfiguration()
     
-    showNoCode(viewController, presentationConfiguration)
+    let viewController: NoCodesViewController = viewsAssembly.viewController(with: id, delegate: self, presentationConfiguration: presentationConfiguration)
+    currentVC = viewController
+    
+    showScreen(viewController, presentationConfiguration)
   }
   
   @MainActor
-  func showNoCode(withContextKey contextKey: String) {
-    let viewController: NoCodesViewController = viewsAssembly.viewController(withContextKey: contextKey, delegate: self)
-    currentVC = viewController
-    
+  func showScreen(withContextKey contextKey: String) {
     let presentationConfiguration: NoCodes.PresentationConfiguration = screenCustomizationDelegate?.presentationConfigurationForScreen(contextKey: contextKey) ?? NoCodes.PresentationConfiguration.defaultConfiguration()
     
-    showNoCode(viewController, presentationConfiguration)
+    let viewController: NoCodesViewController = viewsAssembly.viewController(withContextKey: contextKey, delegate: self, presentationConfiguration: presentationConfiguration)
+    currentVC = viewController
+    
+    showScreen(viewController, presentationConfiguration)
   }
   
-  private func showNoCode(_ viewController: NoCodesViewController, _ presentationConfiguration: NoCodes.PresentationConfiguration) {
+  private func showScreen(_ viewController: NoCodesViewController, _ presentationConfiguration: NoCodes.PresentationConfiguration) {
     guard let presentationViewController: UIViewController = delegate?.controllerForNavigation() ?? topLevelViewController() else { return }
     
     if presentationConfiguration.presentationStyle == .push {
@@ -113,8 +113,8 @@ extension NoCodesFlowCoordinator: NoCodesViewControllerDelegate {
     delegate?.noCodesFinished()
   }
   
-  func noCodesFailedToLoadScreen() {
-    delegate?.noCodesFailedToLoadScreen()
+  func noCodesFailedToLoadScreen(error: Error?) {
+    delegate?.noCodesFailedToLoadScreen(error: error)
   }
   
 }
