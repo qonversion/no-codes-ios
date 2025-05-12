@@ -15,8 +15,8 @@ import NoCodes
 class ViewController: UIViewController {
   
   let projectKey = "PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2"
-  let screenContextKey = "kamo_test"
-  let firstPurchaseButtonProduct = "annual"
+  let screenContextKey = "your_screen_context_key"
+  let firstPurchaseButtonProduct = "weekly"
   let secondPurchaseButtonProduct = "in_app"
   
   private var lastEnteredContextKey: String? {
