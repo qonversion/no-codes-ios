@@ -299,7 +299,7 @@ extension NoCodesViewController {
   private func handle(navigationAction: NoCodes.Action) {
     guard let screenId: String = navigationAction.parameters?[Constants.screenId.rawValue] as? String else { return }
     
-      let viewController = viewsAssembly.viewController(with: screenId, delegate: delegate, presentationConfiguration: presentationConfiguration)
+    let viewController = viewsAssembly.viewController(with: screenId, delegate: delegate, presentationConfiguration: presentationConfiguration)
     navigationController?.pushViewController(viewController, animated: true)
     delegate.noCodesFinishedExecuting(action: navigationAction)
   }
