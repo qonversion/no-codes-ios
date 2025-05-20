@@ -62,7 +62,11 @@ final class NoCodesFlowCoordinator {
     guard let presentationViewController: UIViewController = delegate?.controllerForNavigation() ?? topLevelViewController() else { return }
     
     if presentationConfiguration.presentationStyle == .push {
-      presentationViewController.navigationController?.pushViewController(viewController, animated: presentationConfiguration.animated)
+      var navigationController: UINavigationController? = presentationViewController.navigationController
+      if presentationViewController.isKind(of: UINavigationController.self) {
+        navigationController = presentationViewController as? UINavigationController
+      }
+      navigationController?.pushViewController(viewController, animated: presentationConfiguration.animated)
     } else {
       let presentationStyle: UIModalPresentationStyle = presentationConfiguration.presentationStyle == .popover ? .popover : .fullScreen
       if presentationStyle == .popover {
