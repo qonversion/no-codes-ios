@@ -17,7 +17,7 @@ class NetworkErrorHandler: NetworkErrorHandlerInterface {
         self.decoder = decoder
     }
 
-    func extractError(from response: URLResponse, body: Data) -> QonversionError? {
+    func extractError(from response: URLResponse, body: Data) -> NoCodesError? {
         guard let httpResponse = response as? HTTPURLResponse else { return nil }
 
         if (ResponseCode.internalErrorMin.rawValue...ResponseCode.internalErrorMax.rawValue).contains(httpResponse.statusCode) {
@@ -31,7 +31,7 @@ class NetworkErrorHandler: NetworkErrorHandlerInterface {
         return nil
     }
 
-    private func configureError(for response: HTTPURLResponse, body: Data, type: QonversionErrorType, error: Error? = nil, additionalInfo: [String: Any]? = nil) -> QonversionError {
+    private func configureError(for response: HTTPURLResponse, body: Data, type: NoCodesErrorType, error: Error? = nil, additionalInfo: [String: Any]? = nil) -> NoCodesError {
         var info: [String: Any] = [:]
 
         let apiErrorWrapper: ApiErrorWrapper?
@@ -47,6 +47,6 @@ class NetworkErrorHandler: NetworkErrorHandlerInterface {
             info[ErrorConstants.messageKey.rawValue] = HTTPURLResponse.localizedString(forStatusCode: response.statusCode)
         }
 
-        return QonversionError(type: type, message: apiErrorWrapper?.error.message, error: error, additionalInfo: info)
+        return NoCodesError(type: type, message: apiErrorWrapper?.error.message, error: error, additionalInfo: info)
     }
 }

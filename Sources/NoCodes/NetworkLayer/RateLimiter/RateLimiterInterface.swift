@@ -9,5 +9,5 @@ import Foundation
 
 protocol RateLimiterInterface {
     
-    func validateRateLimit(for request: Request) -> QonversionError?
+    func validateRateLimit(for request: Request) -> NoCodesError?
 }
