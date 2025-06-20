@@ -8,15 +8,15 @@
 
 import Foundation
 
-extension NoCodes {
+public extension NoCodes {
   
-  public enum PresentationStyle {
+  enum PresentationStyle {
     case popover
     case push
     case fullScreen
   }
   
-  public struct PresentationConfiguration {
+  struct PresentationConfiguration {
     let animated: Bool
     let presentationStyle: NoCodes.PresentationStyle
     let statusBarHidden: Bool
