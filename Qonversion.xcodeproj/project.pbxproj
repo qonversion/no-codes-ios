@@ -547,8 +547,6 @@
 			dependencies = (
 			);
 			name = QonversionNoCodes;
-			packageProductDependencies = (
-			);
 			productName = NoCodes;
 			productReference = 70D8E7302D11B24200CDC5F3 /* QonversionNoCodes.framework */;
 			productType = "com.apple.product-type.framework";
@@ -645,13 +643,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Sample/Pods-Sample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Sample/Pods-Sample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
