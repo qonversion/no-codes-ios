@@ -15,7 +15,7 @@ class RequestProcessor: RequestProcessorInterface {
   let decoder: ResponseDecoderInterface
   let retriableRequestsList: [Request]
   let rateLimiter: RateLimiterInterface
-  var criticalError: QonversionError?
+  var criticalError: NoCodesError?
   
   init(baseURL: String, networkProvider: NetworkProviderInterface, headersBuilder: HeadersBuilderInterface, errorHandler: NetworkErrorHandlerInterface, decoder: ResponseDecoderInterface, retriableRequestsList: [Request], rateLimiter: RateLimiterInterface) {
     self.baseURL = baseURL
@@ -32,17 +32,17 @@ class RequestProcessor: RequestProcessorInterface {
       throw error
     }
     
-    if let rateLimitError: QonversionError = rateLimiter.validateRateLimit(for: request) {
+    if let rateLimitError: NoCodesError = rateLimiter.validateRateLimit(for: request) {
       throw rateLimitError
     }
     
     guard var urlRequest: URLRequest = request.convertToURLRequest(baseURL) else {
-      throw QonversionError(type: .invalidRequest)
+      throw NoCodesError(type: .invalidRequest)
     }
     headersBuilder.addHeaders(to: &urlRequest)
     
     let responseBody: Data
-    let error: QonversionError?
+    let error: NoCodesError?
     let responseCode: Int
     do {
       let (data, urlResponse) = try await networkProvider.send(request: urlRequest)
@@ -50,7 +50,7 @@ class RequestProcessor: RequestProcessorInterface {
       responseBody = data
       responseCode = (urlResponse as? HTTPURLResponse)?.statusCode ?? 0
     } catch {
-      throw QonversionError(type: .invalidResponse, error: error)
+      throw NoCodesError(type: .invalidResponse, error: error)
     }
     
     guard error == nil else {
@@ -70,7 +70,7 @@ class RequestProcessor: RequestProcessorInterface {
       
       return result
     } catch {
-      throw QonversionError(type: .invalidResponse, error: error)
+      throw NoCodesError(type: .invalidResponse, error: error)
     }
   }
 }

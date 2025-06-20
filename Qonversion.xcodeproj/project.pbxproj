@@ -14,6 +14,8 @@
 		454EF64B24E5CC5A0070581E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 454EF64924E5CC5A0070581E /* LaunchScreen.storyboard */; };
 		45754AE725814C7500FCA376 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45754AE625814C7500FCA376 /* iAd.framework */; };
 		4CADC5602759181A004FDC10 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CADC55F2759181A004FDC10 /* AuthViewController.swift */; };
+		6AD8B2BA2E056EA9002DB87B /* NoCodesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD8B2B82E056EA9002DB87B /* NoCodesError.swift */; };
+		6AD8B2BB2E056EA9002DB87B /* NoCodesErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD8B2B92E056EA9002DB87B /* NoCodesErrorType.swift */; };
 		701FFC722D4CDF63003C1577 /* NoCodes.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701FFC712D4CDF63003C1577 /* NoCodes.podspec */; };
 		7080E8A12D9EB8B3002995D7 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080E8A02D9EB8B3002995D7 /* SkeletonView.swift */; };
 		7090EDD22D52539A001E9864 /* NoCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7090EDCB2D52539A001E9864 /* NoCodes.h */; };
@@ -40,7 +42,6 @@
 		7090EDE72D52539A001E9864 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090ED972D52539A001E9864 /* ServicesAssembly.swift */; };
 		7090EDE82D52539A001E9864 /* LoggerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDC52D52539A001E9864 /* LoggerWrapper.swift */; };
 		7090EDE92D52539A001E9864 /* RateLimiterInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDB62D52539A001E9864 /* RateLimiterInterface.swift */; };
-		7090EDEA2D52539A001E9864 /* QonversionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDA82D52539A001E9864 /* QonversionError.swift */; };
 		7090EDEB2D52539A001E9864 /* ErrorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDA72D52539A001E9864 /* ErrorConstants.swift */; };
 		7090EDEC2D52539A001E9864 /* NoCodesMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDA12D52539A001E9864 /* NoCodesMapper.swift */; };
 		7090EDED2D52539A001E9864 /* NoCodesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090ED952D52539A001E9864 /* NoCodesAssembly.swift */; };
@@ -57,7 +58,6 @@
 		7090EDF82D52539A001E9864 /* HeadersBuilderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDAD2D52539A001E9864 /* HeadersBuilderInterface.swift */; };
 		7090EDF92D52539A001E9864 /* DeviceInfoCollectorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090ED9A2D52539A001E9864 /* DeviceInfoCollectorInterface.swift */; };
 		7090EDFA2D52539A001E9864 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDAB2D52539A001E9864 /* Header.swift */; };
-		7090EDFB2D52539A001E9864 /* QonversionErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDA92D52539A001E9864 /* QonversionErrorType.swift */; };
 		7090EDFC2D52539A001E9864 /* NetworkProviderInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDB32D52539A001E9864 /* NetworkProviderInterface.swift */; };
 		7090EDFD2D52539A001E9864 /* RateLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7090EDB52D52539A001E9864 /* RateLimiter.swift */; };
 		70CB7CE42C2DB37A00241FF1 /* qonversion_ios_fallbacks.json in Resources */ = {isa = PBXBuildFile; fileRef = 70CB7CE32C2DB37900241FF1 /* qonversion_ios_fallbacks.json */; };
@@ -98,6 +98,8 @@
 		459DABD8243E33C20011ECF3 /* Qonversion.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = Qonversion.modulemap; sourceTree = "<group>"; };
 		459DABDA243E33C20011ECF3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CADC55F2759181A004FDC10 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		6AD8B2B82E056EA9002DB87B /* NoCodesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesError.swift; sourceTree = "<group>"; };
+		6AD8B2B92E056EA9002DB87B /* NoCodesErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesErrorType.swift; sourceTree = "<group>"; };
 		701FFC712D4CDF63003C1577 /* NoCodes.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = NoCodes.podspec; sourceTree = "<group>"; };
 		7052136F29F1807A00164AAF /* PurchasesMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesMapper.swift; sourceTree = "<group>"; };
 		7080E8A02D9EB8B3002995D7 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
@@ -116,8 +118,6 @@
 		7090EDA42D52539A001E9864 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		7090EDA52D52539A001E9864 /* EmptyApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyApiResponse.swift; sourceTree = "<group>"; };
 		7090EDA72D52539A001E9864 /* ErrorConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorConstants.swift; sourceTree = "<group>"; };
-		7090EDA82D52539A001E9864 /* QonversionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QonversionError.swift; sourceTree = "<group>"; };
-		7090EDA92D52539A001E9864 /* QonversionErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QonversionErrorType.swift; sourceTree = "<group>"; };
 		7090EDAB2D52539A001E9864 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		7090EDAC2D52539A001E9864 /* HeadersBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadersBuilder.swift; sourceTree = "<group>"; };
 		7090EDAD2D52539A001E9864 /* HeadersBuilderInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadersBuilderInterface.swift; sourceTree = "<group>"; };
@@ -326,6 +326,8 @@
 		7090EDA02D52539A001E9864 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				6AD8B2B82E056EA9002DB87B /* NoCodesError.swift */,
+				6AD8B2B92E056EA9002DB87B /* NoCodesErrorType.swift */,
 				7090ED9C2D52539A001E9864 /* Action.swift */,
 				7090ED9D2D52539A001E9864 /* Device.swift */,
 				7090ED9E2D52539A001E9864 /* PresentationConfiguration.swift */,
@@ -356,8 +358,6 @@
 			isa = PBXGroup;
 			children = (
 				7090EDA72D52539A001E9864 /* ErrorConstants.swift */,
-				7090EDA82D52539A001E9864 /* QonversionError.swift */,
-				7090EDA92D52539A001E9864 /* QonversionErrorType.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -547,8 +547,6 @@
 			dependencies = (
 			);
 			name = QonversionNoCodes;
-			packageProductDependencies = (
-			);
 			productName = NoCodes;
 			productReference = 70D8E7302D11B24200CDC5F3 /* QonversionNoCodes.framework */;
 			productType = "com.apple.product-type.framework";
@@ -685,6 +683,8 @@
 				7090EDD92D52539A001E9864 /* NetworkErrorHandler.swift in Sources */,
 				7090EDDA2D52539A001E9864 /* NetworkErrorHandlerInterface.swift in Sources */,
 				7090EDDB2D52539A001E9864 /* PresentationConfiguration.swift in Sources */,
+				6AD8B2BA2E056EA9002DB87B /* NoCodesError.swift in Sources */,
+				6AD8B2BB2E056EA9002DB87B /* NoCodesErrorType.swift in Sources */,
 				7090EDDC2D52539A001E9864 /* NoCodesViewController.swift in Sources */,
 				7090EDDD2D52539A001E9864 /* NoCodesService.swift in Sources */,
 				7090EDDE2D52539A001E9864 /* Action.swift in Sources */,
@@ -699,7 +699,6 @@
 				7090EDE72D52539A001E9864 /* ServicesAssembly.swift in Sources */,
 				7090EDE82D52539A001E9864 /* LoggerWrapper.swift in Sources */,
 				7090EDE92D52539A001E9864 /* RateLimiterInterface.swift in Sources */,
-				7090EDEA2D52539A001E9864 /* QonversionError.swift in Sources */,
 				7090EDEB2D52539A001E9864 /* ErrorConstants.swift in Sources */,
 				7090EDEC2D52539A001E9864 /* NoCodesMapper.swift in Sources */,
 				7090EDED2D52539A001E9864 /* NoCodesAssembly.swift in Sources */,
@@ -716,7 +715,6 @@
 				7090EDF82D52539A001E9864 /* HeadersBuilderInterface.swift in Sources */,
 				7090EDF92D52539A001E9864 /* DeviceInfoCollectorInterface.swift in Sources */,
 				7090EDFA2D52539A001E9864 /* Header.swift in Sources */,
-				7090EDFB2D52539A001E9864 /* QonversionErrorType.swift in Sources */,
 				7090EDFC2D52539A001E9864 /* NetworkProviderInterface.swift in Sources */,
 				7090EDFD2D52539A001E9864 /* RateLimiter.swift in Sources */,
 			);

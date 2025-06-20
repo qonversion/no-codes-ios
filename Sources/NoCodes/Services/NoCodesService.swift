@@ -23,7 +23,7 @@ class NoCodesService: NoCodesServiceInterface {
       
       return screen
     } catch {
-      throw QonversionError(type: .screenLoadingFailed, message: nil, error: error)
+      throw NoCodesError(type: .screenLoadingFailed, message: nil, error: error)
     }
   }
   
@@ -34,7 +34,7 @@ class NoCodesService: NoCodesServiceInterface {
       
       return screen
     } catch {
-      throw QonversionError(type: .screenLoadingFailed, message: nil, error: error)
+      throw NoCodesError(type: .screenLoadingFailed, message: nil, error: error)
     }
   }
   
