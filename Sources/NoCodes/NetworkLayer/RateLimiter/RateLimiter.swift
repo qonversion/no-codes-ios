@@ -15,11 +15,11 @@ final class RateLimiter: RateLimiterInterface {
         self.maxRequestsPerSecond = maxRequestsPerSecond
     }
 
-    func validateRateLimit(for request: Request) -> QonversionError? {
+    func validateRateLimit(for request: Request) -> NoCodesError? {
         let hash: Int = request.hashValue
         let isLimitExceeded: Bool = isRateLimitExceeded(hash: hash)
         if isLimitExceeded {
-            let error = QonversionError(type: .rateLimitExceeded, message: "Rate limit exceeded for the current request", error: nil, additionalInfo: nil)
+            let error = NoCodesError(type: .rateLimitExceeded, message: "Rate limit exceeded for the current request", error: nil, additionalInfo: nil)
             return error
         } else {
             saveRequest(hash: hash)

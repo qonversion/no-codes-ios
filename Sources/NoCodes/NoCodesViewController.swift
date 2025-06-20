@@ -115,7 +115,7 @@ final class NoCodesViewController: UIViewController {
           screen = try await noCodesService.loadScreen(withContextKey: contextKey)
         } else {
           logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
-          throw QonversionError(type: .screenLoadingFailed, message: "No screen id or context key provided")
+          throw NoCodesError(type: .screenLoadingFailed, message: "No screen id or context key provided")
         }
 
         self.screenId = screen.id
@@ -218,12 +218,12 @@ extension NoCodesViewController {
             let products: [String: Qonversion.Product] = try? await Qonversion.shared().products()
       else {
         logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue)
-        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
+        return delegate.noCodesFailedToLoadScreen(error: NoCodesError(type: .productsLoadingFailed))
       }
       
       let filteredProducts: [String: Qonversion.Product] = products.filter { productIds.contains($0.key) }
       guard !filteredProducts.isEmpty else {
-        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
+        return delegate.noCodesFailedToLoadScreen(error: NoCodesError(type: .productsLoadingFailed))
       }
       
       let productsInfo: [String: Any] = noCodesMapper.map(products: filteredProducts)
@@ -232,7 +232,7 @@ extension NoCodesViewController {
             let jsString = String(data: data, encoding: .utf8)
       else {
         logger.error(LoggerInfoMessages.productsLoadingFailed.rawValue)
-        return delegate.noCodesFailedToLoadScreen(error: QonversionError(type: .productsLoadingFailed))
+        return delegate.noCodesFailedToLoadScreen(error: NoCodesError(type: .productsLoadingFailed))
       }
       await send(event: Constants.setProducts.rawValue, data: jsString)
     }
@@ -273,7 +273,7 @@ extension NoCodesViewController {
       do {
         let products = try await Qonversion.shared().products()
         guard let product = products[productId] else {
-          throw QonversionError(type: .productNotFound, message: "Product with id \(productId) not found")
+          throw NoCodesError(type: .productNotFound, message: "Product with id \(productId) not found")
         }
 
         let options = Qonversion.PurchaseOptions()

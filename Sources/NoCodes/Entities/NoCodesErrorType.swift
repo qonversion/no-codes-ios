@@ -5,7 +5,7 @@
 //  Created by Suren Sarkisyan on 07.02.2024.
 //
 
-enum QonversionErrorType {
+public enum NoCodesErrorType {
   case unknown
   case `internal`
   case sdkInitializationError
@@ -18,7 +18,7 @@ enum QonversionErrorType {
   case rateLimitExceeded
   case screenLoadingFailed
   
-  func message() -> String {
+  public func message() -> String {
     switch self {
     case .internal:
       return "Internal error occurred."
