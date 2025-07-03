@@ -11,7 +11,7 @@ import OSLog
 import StoreKit
 
 fileprivate enum SDKLevelConstants: String {
-  case version = "0.1.2"
+  case version = "0.1.3"
 }
 
 fileprivate enum IntConstants: UInt {
