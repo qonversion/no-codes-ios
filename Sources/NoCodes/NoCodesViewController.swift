@@ -193,6 +193,14 @@ extension NoCodesViewController: WKScriptMessageHandler {
 
 extension NoCodesViewController {
   
+  private var isModalPresentation: Bool {
+    if let navigationController = navigationController, navigationController.viewControllers.count > 1 {
+      return false
+    }
+    
+    return modalPresentationStyle != .none || presentingViewController != nil
+  }
+  
   private func send(event: String, data: String) async {
     let _ = try? await webView.evaluateJavaScript("window.dispatchEvent(new CustomEvent(\"\(event)\",  {detail: \(data)} ))")
   }
@@ -319,14 +327,20 @@ extension NoCodesViewController {
   }
   
   private func close(action: NoCodes.Action?) {
-    if navigationController?.presentingViewController != nil {
-      dismiss(animated: true) {
-        self.delegate.noCodesFinished()
+    if isModalPresentation {
+      dismiss(animated: true) { [weak self] in
+        self?.delegate?.noCodesFinished()
       }
     } else {
-      guard let vcToPop: UIViewController = firstExternalViewController() else { return }
-      navigationController?.popToViewController(vcToPop, animated: true)
-      delegate.noCodesFinished()
+      guard let externalVC = firstExternalViewController() else {
+        // Fallback: dismiss anyway
+        dismiss(animated: true) { [weak self] in
+          self?.delegate?.noCodesFinished()
+        }
+        return
+      }
+      navigationController?.popToViewController(externalVC, animated: true)
+      delegate?.noCodesFinished()
     }
   }
   
