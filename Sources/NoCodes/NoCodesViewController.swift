@@ -340,8 +340,7 @@ extension NoCodesViewController {
         return
       }
       navigationController?.popToViewController(externalVC, animated: true)
-      // Note: noCodesFinished() is not called for push navigation
-      // It's handled in handle(closeAction:) with specific conditions
+      delegate?.noCodesFinished()
     }
   }
   
