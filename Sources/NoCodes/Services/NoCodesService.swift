@@ -11,9 +11,11 @@ import Foundation
 class NoCodesService: NoCodesServiceInterface {
   
   private let requestProcessor: RequestProcessorInterface
+  private let fallbackService: FallbackServiceInterface?
   
-  init(requestProcessor: RequestProcessorInterface) {
+  init(requestProcessor: RequestProcessorInterface, fallbackService: FallbackServiceInterface? = nil) {
     self.requestProcessor = requestProcessor
+    self.fallbackService = fallbackService
   }
   
   func loadScreen(with id: String) async throws -> NoCodes.Screen {
@@ -34,8 +36,38 @@ class NoCodesService: NoCodesServiceInterface {
       
       return screen
     } catch {
+      // Try fallback if available and error is network-related
+      if let fallbackService = fallbackService,
+         isNetworkError(error) {
+        if let fallbackScreen = fallbackService.loadScreen(withContextKey: contextKey) {
+          return fallbackScreen
+        }
+      }
+      
       throw NoCodesError(type: .screenLoadingFailed, message: nil, error: error)
     }
+  }
+  
+  private func isNetworkError(_ error: Error) -> Bool {
+    // Check if error is network-related (not API business logic errors)
+    if let noCodesError = error as? NoCodesError {
+      switch noCodesError.type {
+      case .invalidRequest, .invalidResponse, .internal, .critical:
+        return true
+      case .screenLoadingFailed, .productsLoadingFailed, .productNotFound, .authorizationFailed, .rateLimitExceeded:
+        return false
+      case .unknown, .sdkInitializationError:
+        return true
+      }
+    }
+    
+    // Check for common network errors
+    let nsError = error as NSError
+    return nsError.domain == NSURLErrorDomain || 
+           nsError.domain == "com.apple.dt.XCTestErrorDomain" ||
+           error.localizedDescription.contains("network") ||
+           error.localizedDescription.contains("connection") ||
+           error.localizedDescription.contains("timeout")
   }
   
 }

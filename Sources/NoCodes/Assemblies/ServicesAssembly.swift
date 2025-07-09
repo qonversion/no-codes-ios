@@ -22,7 +22,11 @@ final class ServicesAssembly {
   }
   
   func noCodesService() -> NoCodesServiceInterface {
-    return NoCodesService(requestProcessor: requestProcessor())
+    return NoCodesService(requestProcessor: requestProcessor(), fallbackService: fallbackService())
+  }
+  
+  func fallbackService() -> FallbackServiceInterface? {
+    return FallbackService(logger: miscAssembly.loggerWrapper())
   }
   
   func requestProcessor() -> RequestProcessorInterface {
