@@ -2,37 +2,50 @@
 //  FallbackService.swift
 //  NoCodes
 //
-//  Created by Suren Sarkisyan on 17.12.2024.
-//  Copyright © 2024 Qonversion Inc. All rights reserved.
+//  Created by Suren Sarkisyan on 07.07.2025.
+//  Copyright © 2025 Qonversion Inc. All rights reserved.
 //
 
 import Foundation
 
-protocol FallbackServiceInterface {
-  func loadScreen(withContextKey contextKey: String) -> NoCodes.Screen?
+// MARK: - Fallback File Structures
+
+struct FallbackFile: Decodable {
+  let screens: [String: FallbackScreen]
+}
+
+struct FallbackScreen: Codable {
+  let id: String
+  let body: String
+  let context_key: String
 }
 
 final class FallbackService: FallbackServiceInterface {
-  
   private let logger: LoggerWrapper
   private let fallbackFileName: String
+  private let decoder: JSONDecoder
+  private let encoder: JSONEncoder
   
-  init(logger: LoggerWrapper, fallbackFileName: String = "nocodes_fallbacks.json") {
+  init(logger: LoggerWrapper, fallbackFileName: String = "nocodes_fallbacks.json", decoder: JSONDecoder = JSONDecoder(), encoder: JSONEncoder = JSONEncoder()) {
     self.logger = logger
     self.fallbackFileName = fallbackFileName
+    self.decoder = decoder
+    self.encoder = encoder
   }
   
   func loadScreen(withContextKey contextKey: String) -> NoCodes.Screen? {
     do {
-      let fallbackData = try loadFallbackData()
-      let screens = fallbackData["screens"] as? [String: [String: Any]] ?? [:]
+      let fallbackFile = try loadFallbackData()
       
-      guard let screenData = screens[contextKey] else {
+      guard let fallbackScreen = fallbackFile.screens[contextKey] else {
         logger.debug("No fallback screen found for context key: \(contextKey)")
         return nil
       }
       
-      let screen = try parseScreen(from: screenData)
+      // Convert FallbackScreen to JSON data and decode as NoCodes.Screen
+      let screenData = try encoder.encode(fallbackScreen)
+      let screen = try decoder.decode(NoCodes.Screen.self, from: screenData)
+      
       logger.debug("Successfully loaded fallback screen for context key: \(contextKey)")
       return screen
       
@@ -42,7 +55,32 @@ final class FallbackService: FallbackServiceInterface {
     }
   }
   
-  private func loadFallbackData() throws -> [String: Any] {
+  func loadScreen(with id: String) -> NoCodes.Screen? {
+    do {
+      let fallbackFile = try loadFallbackData()
+      
+      // Search for screen with matching ID among all screens
+      let matchingScreen = fallbackFile.screens.values.first { $0.id == id }
+      
+      guard let fallbackScreen = matchingScreen else {
+        logger.debug("No fallback screen found for id: \(id)")
+        return nil
+      }
+      
+      // Convert FallbackScreen to JSON data and decode as NoCodes.Screen
+      let screenData = try encoder.encode(fallbackScreen)
+      let screen = try decoder.decode(NoCodes.Screen.self, from: screenData)
+      
+      logger.debug("Successfully loaded fallback screen for id: \(id)")
+      return screen
+      
+    } catch {
+      logger.error("Failed to load fallback screen: \(error.localizedDescription)")
+      return nil
+    }
+  }
+  
+  private func loadFallbackData() throws -> FallbackFile {
     guard let path = Bundle.main.path(forResource: fallbackFileName.replacingOccurrences(of: ".json", with: ""), ofType: "json") else {
       logger.debug("Fallback file not found: \(fallbackFileName)")
       throw FallbackError.fileNotFound
@@ -50,23 +88,12 @@ final class FallbackService: FallbackServiceInterface {
     
     let url = URL(fileURLWithPath: path)
     let data = try Data(contentsOf: url)
-    let json = try JSONSerialization.jsonObject(with: data, options: [])
     
-    guard let dictionary = json as? [String: Any] else {
-      throw FallbackError.invalidFormat
-    }
-    
-    return dictionary
+    return try decoder.decode(FallbackFile.self, from: data)
   }
   
-  private func parseScreen(from data: [String: Any]) throws -> NoCodes.Screen {
-    guard let id = data["id"] as? String,
-          let html = data["html"] as? String,
-          let contextKey = data["context_key"] as? String else {
-      throw FallbackError.invalidScreenData
-    }
-    
-    return NoCodes.Screen(id: id, html: html, contextKey: contextKey)
+  static func isFallbackFileAvailable(_ fileName: String = "nocodes_fallbacks.json") -> Bool {
+    return Bundle.main.path(forResource: fileName.replacingOccurrences(of: ".json", with: ""), ofType: "json") != nil
   }
 }
 
@@ -74,16 +101,5 @@ final class FallbackService: FallbackServiceInterface {
 
 enum FallbackError: Error {
   case fileNotFound
-  case invalidFormat
   case invalidScreenData
 }
-
-// MARK: - Screen Extension
-
-extension NoCodes.Screen {
-  init(id: String, html: String, contextKey: String) {
-    self.id = id
-    self.html = html
-    self.contextKey = contextKey
-  }
-} 

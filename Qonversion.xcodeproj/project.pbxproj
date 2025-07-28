@@ -16,6 +16,9 @@
 		4CADC5602759181A004FDC10 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CADC55F2759181A004FDC10 /* AuthViewController.swift */; };
 		6AD8B2BA2E056EA9002DB87B /* NoCodesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD8B2B82E056EA9002DB87B /* NoCodesError.swift */; };
 		6AD8B2BB2E056EA9002DB87B /* NoCodesErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD8B2B92E056EA9002DB87B /* NoCodesErrorType.swift */; };
+		701284D92E268B48001DEB96 /* FallbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701284D82E268B48001DEB96 /* FallbackService.swift */; };
+		701284DB2E26CAFB001DEB96 /* FallbackServiceInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701284DA2E26CAFB001DEB96 /* FallbackServiceInterface.swift */; };
+		701284DD2E26F15B001DEB96 /* nocodes_fallbacks.json in Resources */ = {isa = PBXBuildFile; fileRef = 701284DC2E26F15B001DEB96 /* nocodes_fallbacks.json */; };
 		701FFC722D4CDF63003C1577 /* NoCodes.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 701FFC712D4CDF63003C1577 /* NoCodes.podspec */; };
 		7080E8A12D9EB8B3002995D7 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080E8A02D9EB8B3002995D7 /* SkeletonView.swift */; };
 		7090EDD22D52539A001E9864 /* NoCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7090EDCB2D52539A001E9864 /* NoCodes.h */; };
@@ -100,7 +103,10 @@
 		4CADC55F2759181A004FDC10 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		6AD8B2B82E056EA9002DB87B /* NoCodesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesError.swift; sourceTree = "<group>"; };
 		6AD8B2B92E056EA9002DB87B /* NoCodesErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCodesErrorType.swift; sourceTree = "<group>"; };
-		701FFC712D4CDF63003C1577 /* NoCodes.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = NoCodes.podspec; sourceTree = "<group>"; };
+		701284D82E268B48001DEB96 /* FallbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackService.swift; sourceTree = "<group>"; };
+		701284DA2E26CAFB001DEB96 /* FallbackServiceInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackServiceInterface.swift; sourceTree = "<group>"; };
+		701284DC2E26F15B001DEB96 /* nocodes_fallbacks.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = nocodes_fallbacks.json; sourceTree = "<group>"; };
+		701FFC712D4CDF63003C1577 /* NoCodes.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = NoCodes.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7052136F29F1807A00164AAF /* PurchasesMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesMapper.swift; sourceTree = "<group>"; };
 		7080E8A02D9EB8B3002995D7 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		7090ED942D52539A001E9864 /* MiscAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscAssembly.swift; sourceTree = "<group>"; };
@@ -214,6 +220,7 @@
 				454EF64924E5CC5A0070581E /* LaunchScreen.storyboard */,
 				454EF64C24E5CC5A0070581E /* Info.plist */,
 				894278812759334D00A8A6EC /* GoogleService-Info.plist */,
+				701284DC2E26F15B001DEB96 /* nocodes_fallbacks.json */,
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -445,6 +452,8 @@
 		7090EDC42D52539A001E9864 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				701284DA2E26CAFB001DEB96 /* FallbackServiceInterface.swift */,
+				701284D82E268B48001DEB96 /* FallbackService.swift */,
 				7090EDC22D52539A001E9864 /* NoCodesService.swift */,
 				7090EDC32D52539A001E9864 /* NoCodesServiceInterface.swift */,
 			);
@@ -597,6 +606,7 @@
 				454EF64B24E5CC5A0070581E /* LaunchScreen.storyboard in Resources */,
 				894278822759334D00A8A6EC /* GoogleService-Info.plist in Resources */,
 				454EF64824E5CC5A0070581E /* Assets.xcassets in Resources */,
+				701284DD2E26F15B001DEB96 /* nocodes_fallbacks.json in Resources */,
 				70CB7CE42C2DB37A00241FF1 /* qonversion_ios_fallbacks.json in Resources */,
 				454EF64624E5CC590070581E /* Main.storyboard in Resources */,
 			);
@@ -643,9 +653,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Sample/Pods-Sample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Sample/Pods-Sample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -697,6 +711,7 @@
 				7090EDE52D52539A001E9864 /* NoCodesViewsAssembly.swift in Sources */,
 				7090EDE62D52539A001E9864 /* RequestType.swift in Sources */,
 				7090EDE72D52539A001E9864 /* ServicesAssembly.swift in Sources */,
+				701284D92E268B48001DEB96 /* FallbackService.swift in Sources */,
 				7090EDE82D52539A001E9864 /* LoggerWrapper.swift in Sources */,
 				7090EDE92D52539A001E9864 /* RateLimiterInterface.swift in Sources */,
 				7090EDEB2D52539A001E9864 /* ErrorConstants.swift in Sources */,
@@ -711,6 +726,7 @@
 				7090EDF42D52539A001E9864 /* Request.swift in Sources */,
 				7090EDF52D52539A001E9864 /* RequestProcessorInterface.swift in Sources */,
 				7090EDF62D52539A001E9864 /* ResponseDecoder.swift in Sources */,
+				701284DB2E26CAFB001DEB96 /* FallbackServiceInterface.swift in Sources */,
 				7090EDF72D52539A001E9864 /* EmptyApiResponse.swift in Sources */,
 				7090EDF82D52539A001E9864 /* HeadersBuilderInterface.swift in Sources */,
 				7090EDF92D52539A001E9864 /* DeviceInfoCollectorInterface.swift in Sources */,

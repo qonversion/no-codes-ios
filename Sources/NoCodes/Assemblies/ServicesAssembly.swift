@@ -12,13 +12,20 @@ fileprivate enum StringConstants: String {
   case baseURL = "https://api.qonversion.io/"
 }
 
+fileprivate enum FallbackConstants {
+  static let defaultFileName = "nocodes_fallbacks.json"
+  static let fallbackTimeout: TimeInterval = 5.0
+}
+
 final class ServicesAssembly {
   
   private let miscAssembly: MiscAssembly
   private var deviceInfoCollectorInstance: DeviceInfoCollector?
+  private let fallbackFileName: String?
   
-  init(miscAssembly: MiscAssembly) {
+  init(miscAssembly: MiscAssembly, fallbackFileName: String? = nil) {
     self.miscAssembly = miscAssembly
+    self.fallbackFileName = fallbackFileName
   }
   
   func noCodesService() -> NoCodesServiceInterface {
@@ -26,7 +33,12 @@ final class ServicesAssembly {
   }
   
   func fallbackService() -> FallbackServiceInterface? {
-    return FallbackService(logger: miscAssembly.loggerWrapper())
+    return FallbackService(
+      logger: miscAssembly.loggerWrapper(), 
+      fallbackFileName: fallbackFileName ?? FallbackConstants.defaultFileName,
+      decoder: miscAssembly.jsonDecoder(),
+      encoder: miscAssembly.encoder()
+    )
   }
   
   func requestProcessor() -> RequestProcessorInterface {
@@ -44,9 +56,10 @@ final class ServicesAssembly {
   }
   
   func networkProvider() -> NetworkProviderInterface {
-    let session: URLSession = urlSession()
-    let networkProvider = NetworkProvider(session: session)
+    let fallbackAvailable = FallbackService.isFallbackFileAvailable(fallbackFileName ?? FallbackConstants.defaultFileName)
+    let timeout: TimeInterval? = fallbackAvailable ? FallbackConstants.fallbackTimeout : nil
     
+    let networkProvider = NetworkProvider(timeout: timeout)
     return networkProvider
   }
   
