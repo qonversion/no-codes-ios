@@ -11,13 +11,7 @@ import Foundation
 // MARK: - Fallback File Structures
 
 struct FallbackFile: Decodable {
-  let screens: [String: FallbackScreen]
-}
-
-struct FallbackScreen: Codable {
-  let id: String
-  let body: String
-  let context_key: String
+  let screens: [String: NoCodes.Screen]
 }
 
 final class FallbackService: FallbackServiceInterface {
@@ -40,12 +34,13 @@ final class FallbackService: FallbackServiceInterface {
     do {
       let fallbackFile = try loadFallbackData()
       
-      guard let fallbackScreen = fallbackFile.screens[contextKey] else {
+      guard let screen = fallbackFile.screens[contextKey] else {
         logger.debug("No fallback screen found for context key: \(contextKey)")
         return nil
       }
       
-      return convertFallbackScreenToNoCodesScreen(fallbackScreen, identifier: contextKey)
+      logger.debug("Successfully loaded fallback screen for context key: \(contextKey)")
+      return screen
       
     } catch {
       logger.error("Failed to load fallback screen: \(error.localizedDescription)")
@@ -60,12 +55,13 @@ final class FallbackService: FallbackServiceInterface {
       // Search for screen with matching ID among all screens
       let matchingScreen = fallbackFile.screens.values.first { $0.id == id }
       
-      guard let fallbackScreen = matchingScreen else {
+      guard let screen = matchingScreen else {
         logger.debug("No fallback screen found for id: \(id)")
         return nil
       }
       
-      return convertFallbackScreenToNoCodesScreen(fallbackScreen, identifier: id)
+      logger.debug("Successfully loaded fallback screen for id: \(id)")
+      return screen
       
     } catch {
       logger.error("Failed to load fallback screen: \(error.localizedDescription)")
@@ -73,20 +69,7 @@ final class FallbackService: FallbackServiceInterface {
     }
   }
   
-  private func convertFallbackScreenToNoCodesScreen(_ fallbackScreen: FallbackScreen, identifier: String) -> NoCodes.Screen? {
-    do {
-      // Convert FallbackScreen to JSON data and decode as NoCodes.Screen
-      let screenData = try encoder.encode(fallbackScreen)
-      let screen = try decoder.decode(NoCodes.Screen.self, from: screenData)
-      
-      logger.debug("Successfully loaded fallback screen for identifier: \(identifier)")
-      return screen
-      
-    } catch {
-      logger.error("Failed to convert fallback screen to NoCodes.Screen: \(error.localizedDescription)")
-      return nil
-    }
-  }
+
   
   private func loadFallbackData() throws -> FallbackFile {
     // Return cached data if already loaded
