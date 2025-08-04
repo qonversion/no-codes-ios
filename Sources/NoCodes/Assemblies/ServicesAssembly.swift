@@ -12,6 +12,10 @@ fileprivate enum StringConstants: String {
   case baseURL = "https://api.qonversion.io/"
 }
 
+fileprivate enum ServicesConstants {
+    static let defaultTimeout: TimeInterval = 20.0
+}
+
 fileprivate enum FallbackConstants {
   static let defaultFileName = "nocodes_fallbacks.json"
   static let fallbackTimeout: TimeInterval = 5.0
@@ -57,7 +61,7 @@ final class ServicesAssembly {
   
   func networkProvider() -> NetworkProviderInterface {
     let fallbackAvailable = FallbackService.isFallbackFileAvailable(getFallbackFileName())
-    let timeout: TimeInterval? = fallbackAvailable ? FallbackConstants.fallbackTimeout : nil
+    let timeout: TimeInterval? = fallbackAvailable ? FallbackConstants.fallbackTimeout : ServicesConstants.defaultTimeout
     
     let networkProvider = NetworkProvider(timeout: timeout)
     return networkProvider

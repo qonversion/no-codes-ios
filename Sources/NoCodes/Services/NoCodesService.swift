@@ -62,7 +62,7 @@ class NoCodesService: NoCodesServiceInterface {
       case .screenLoadingFailed, .productsLoadingFailed, .productNotFound, .authorizationFailed, .rateLimitExceeded, .sdkInitializationError:
         return false
       case .unknown:
-        return false
+        return true
       }
     }
     
