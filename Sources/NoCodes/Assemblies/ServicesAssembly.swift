@@ -35,7 +35,7 @@ final class ServicesAssembly {
   func fallbackService() -> FallbackServiceInterface? {
     return FallbackService(
       logger: miscAssembly.loggerWrapper(), 
-      fallbackFileName: fallbackFileName ?? FallbackConstants.defaultFileName,
+      fallbackFileName: getFallbackFileName(),
       decoder: miscAssembly.jsonDecoder(),
       encoder: miscAssembly.encoder()
     )
@@ -56,7 +56,7 @@ final class ServicesAssembly {
   }
   
   func networkProvider() -> NetworkProviderInterface {
-    let fallbackAvailable = FallbackService.isFallbackFileAvailable(fallbackFileName ?? FallbackConstants.defaultFileName)
+    let fallbackAvailable = FallbackService.isFallbackFileAvailable(getFallbackFileName())
     let timeout: TimeInterval? = fallbackAvailable ? FallbackConstants.fallbackTimeout : nil
     
     let networkProvider = NetworkProvider(timeout: timeout)
@@ -76,6 +76,12 @@ final class ServicesAssembly {
     deviceInfoCollectorInstance = deviceInfoCollector
     
     return deviceInfoCollector
+  }
+  
+  // MARK: - Private Methods
+  
+  private func getFallbackFileName() -> String {
+    return fallbackFileName ?? FallbackConstants.defaultFileName
   }
   
 }
