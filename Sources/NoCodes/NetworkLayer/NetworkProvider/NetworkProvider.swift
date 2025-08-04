@@ -14,7 +14,7 @@ class NetworkProvider: NetworkProviderInterface {
         self.session = session
     }
     
-    convenience init(timeout: TimeInterval? = 60.0) {
+    convenience init(timeout: TimeInterval?) {
         let config = URLSessionConfiguration.default
         timeout.map {
             config.timeoutIntervalForRequest = $0

@@ -59,10 +59,10 @@ class NoCodesService: NoCodesServiceInterface {
       switch noCodesError.type {
       case .invalidRequest, .invalidResponse, .internal, .critical:
         return true
-      case .screenLoadingFailed, .productsLoadingFailed, .productNotFound, .authorizationFailed, .rateLimitExceeded:
+      case .screenLoadingFailed, .productsLoadingFailed, .productNotFound, .authorizationFailed, .rateLimitExceeded, .sdkInitializationError:
         return false
-      case .unknown, .sdkInitializationError:
-        return true
+      case .unknown:
+        return false
       }
     }
     
