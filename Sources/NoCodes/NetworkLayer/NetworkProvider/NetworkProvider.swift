@@ -14,6 +14,16 @@ class NetworkProvider: NetworkProviderInterface {
         self.session = session
     }
     
+    convenience init(timeout: TimeInterval?) {
+        let config = URLSessionConfiguration.default
+        timeout.map {
+            config.timeoutIntervalForRequest = $0
+            config.timeoutIntervalForResource = $0
+        }
+        let session = URLSession(configuration: config)
+        self.init(session: session)
+    }
+    
     func send(request: URLRequest) async throws -> (Data, URLResponse) {
         return try await session.data(for: request)
     }

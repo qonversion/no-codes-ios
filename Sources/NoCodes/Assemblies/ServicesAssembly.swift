@@ -12,17 +12,37 @@ fileprivate enum StringConstants: String {
   case baseURL = "https://api.qonversion.io/"
 }
 
+fileprivate enum ServicesConstants {
+    static let defaultTimeout: TimeInterval = 20.0
+}
+
+fileprivate enum FallbackConstants {
+  static let defaultFileName = "nocodes_fallbacks.json"
+  static let fallbackTimeout: TimeInterval = 5.0
+}
+
 final class ServicesAssembly {
   
   private let miscAssembly: MiscAssembly
   private var deviceInfoCollectorInstance: DeviceInfoCollector?
+  private let fallbackFileName: String?
   
-  init(miscAssembly: MiscAssembly) {
+  init(miscAssembly: MiscAssembly, fallbackFileName: String? = nil) {
     self.miscAssembly = miscAssembly
+    self.fallbackFileName = fallbackFileName
   }
   
   func noCodesService() -> NoCodesServiceInterface {
-    return NoCodesService(requestProcessor: requestProcessor())
+    return NoCodesService(requestProcessor: requestProcessor(), fallbackService: fallbackService())
+  }
+  
+  func fallbackService() -> FallbackServiceInterface? {
+    return FallbackService(
+      logger: miscAssembly.loggerWrapper(), 
+      fallbackFileName: getFallbackFileName(),
+      decoder: miscAssembly.jsonDecoder(),
+      encoder: miscAssembly.encoder()
+    )
   }
   
   func requestProcessor() -> RequestProcessorInterface {
@@ -40,9 +60,10 @@ final class ServicesAssembly {
   }
   
   func networkProvider() -> NetworkProviderInterface {
-    let session: URLSession = urlSession()
-    let networkProvider = NetworkProvider(session: session)
+    let fallbackAvailable = FallbackService.isFallbackFileAvailable(getFallbackFileName())
+    let timeout: TimeInterval? = fallbackAvailable ? FallbackConstants.fallbackTimeout : ServicesConstants.defaultTimeout
     
+    let networkProvider = NetworkProvider(timeout: timeout)
     return networkProvider
   }
   
@@ -59,6 +80,12 @@ final class ServicesAssembly {
     deviceInfoCollectorInstance = deviceInfoCollector
     
     return deviceInfoCollector
+  }
+  
+  // MARK: - Private Methods
+  
+  private func getFallbackFileName() -> String {
+    return fallbackFileName ?? FallbackConstants.defaultFileName
   }
   
 }
