@@ -37,7 +37,7 @@ protocol NoCodesViewControllerDelegate {
 }
 
 final class NoCodesViewController: UIViewController {
-  
+
   private var webView: WKWebView!
   private var activityIndicator: UIActivityIndicatorView!
   private var screenId: String?
@@ -50,8 +50,9 @@ final class NoCodesViewController: UIViewController {
   private var logger: LoggerWrapper!
   private var skeletonView: SkeletonView!
   private var presentationConfiguration: NoCodes.PresentationConfiguration!
-  
-  init(screenId: String?, contextKey: String?, delegate: NoCodesViewControllerDelegate, noCodesMapper: NoCodesMapperInterface, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper, presentationConfiguration: NoCodes.PresentationConfiguration) {
+  private var theme: NoCodes.Theme!
+
+  init(screenId: String?, contextKey: String?, delegate: NoCodesViewControllerDelegate, noCodesMapper: NoCodesMapperInterface, noCodesService: NoCodesServiceInterface, viewsAssembly: ViewsAssembly, logger: LoggerWrapper, presentationConfiguration: NoCodes.PresentationConfiguration, theme: NoCodes.Theme) {
     self.screenId = screenId
     self.contextKey = contextKey
     self.noCodesMapper = noCodesMapper
@@ -60,9 +61,10 @@ final class NoCodesViewController: UIViewController {
     self.delegate = delegate
     self.logger = logger
     self.presentationConfiguration = presentationConfiguration
-    
+    self.theme = theme
+
     super.init(nibName: nil, bundle: nil)
-    
+
     skeletonView = SkeletonView(frame: view.frame, interfaceStyle: traitCollection.userInterfaceStyle)
     addSkeleton()
   }
@@ -121,8 +123,9 @@ final class NoCodesViewController: UIViewController {
         self.screenId = screen.id
         self.contextKey = screen.contextKey
         delegate.noCodesHasShownScreen(id: screen.id)
-        
-        webView.loadHTMLString(screen.html, baseURL: nil)
+
+        let themedHtml = injectTheme(into: screen.html)
+        webView.loadHTMLString(themedHtml, baseURL: nil)
       } catch {
         delegate.noCodesFailedToLoadScreen(error: nil)
         logger.error(LoggerInfoMessages.screenLoadingFailed.rawValue)
@@ -192,7 +195,20 @@ extension NoCodesViewController: WKScriptMessageHandler {
 }
 
 extension NoCodesViewController {
-  
+
+  private func injectTheme(into html: String) -> String {
+    let themeScript = "<script>window.noCodesTheme = \"\(theme.rawValue)\";</script>"
+
+    if let headRange = html.range(of: "<head>", options: .caseInsensitive) {
+      var modifiedHtml = html
+      modifiedHtml.insert(contentsOf: themeScript, at: headRange.upperBound)
+      return modifiedHtml
+    }
+
+    // Fallback: prepend script if no <head> tag found
+    return themeScript + html
+  }
+
   private var isModalPresentation: Bool {
     if let navigationController = navigationController, navigationController.viewControllers.count > 1 {
       return false
