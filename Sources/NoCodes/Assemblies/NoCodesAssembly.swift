@@ -35,7 +35,7 @@ final class NoCodesAssembly {
   }
   
   func viewsAssembly() -> ViewsAssembly {
-    return ViewsAssembly(miscAssembly: miscAssembly, servicesAssembly: servicesAssembly)
+    return ViewsAssembly(miscAssembly: miscAssembly, servicesAssembly: servicesAssembly, theme: configuration.theme)
   }
   
 }
